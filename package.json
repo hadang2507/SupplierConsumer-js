@@ -1,0 +1,26 @@
+{
+  "name": "supplierconsumer_js",
+  "version": "1.0.0",
+  "description": "Chaincode implemented in nodeJS",
+  "main": "viewBlockContent.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startDev": "CORE_CHAINCODE_ID_NAME=supplychain:v0 fabric-chaincode-node -- --peer.address grpc://localhost:7050"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hadang2507/SupplierConsumer-js.git"
+  },
+  "author": "hadang",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hadang2507/SupplierConsumer-js/issues"
+  },
+  "homepage": "https://github.com/hadang2507/SupplierConsumer-js#readme",
+  "dependencies": {
+    "fabric-ca-client": "^2.2.9",
+    "fabric-contract-api": "^2.2.2",
+    "fabric-network": "^2.2.9",
+    "fabric-shim": "^2.2.2"
+  }
+}
