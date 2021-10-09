@@ -123,12 +123,12 @@ async function main() {
 			// Now let's try to submit a transaction.
 			// This will be sent to both peers and if both peers endorse the transaction, the endorsed proposal will be sent
 			// to the orderer to be committed by each of the peer's to the channel ledger.
-			console.log('\n--> Submit Transaction: CreateAsset, creates new asset with id, Name, Type, Owner, Issuer, currentOwner, transferTo arguments');
-			result = await contract.submitTransaction('CreateAsset', 'I23', 'blockchain', 'abc', '', 'Org1', '', '' );
-			console.log('*** Result: committed');
-			if (`${result}` !== '') {
-				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-			}
+			// console.log('\n--> Submit Transaction: CreateAsset, creates new asset with id, Name, Type, Owner, Issuer, currentOwner, transferTo arguments');
+			// result = await contract.submitTransaction('CreateAsset', 'I23', 'blockchain', 'abc', '', 'Org1', '', '' );
+			// console.log('*** Result: committed');
+			// if (`${result}` !== '') {
+			// 	console.log(`*** Result: ${prettyJSONString(result.toString())}`);
+			// }
 
 			console.log('\n--> Evaluate Transaction: ReadAsset, function returns an asset with a given assetID');
 			result = await contract.evaluateTransaction('ReadAsset', 'I3');
