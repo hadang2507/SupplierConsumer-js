@@ -16,45 +16,40 @@ class AssetTransfer extends Contract {
                 ID: 'I1',
                 Name: 'Apple',
                 Type: 'ingredient',
-                Owner: '',
                 Issuer: 'Org1',
-                currentOwner: 'Org1',
+                Owner: 'Org1',
                 transferTo: ''
             },
             {
                 ID: 'I2',
                 Name: 'Sugar',
                 Type: 'ingredient',
-                Owner: '',
                 Issuer: 'Org1',
-                currentOwner: 'Org1',
+                Owner: 'Org1',
                 transferTo: ''
             },
             {
                 ID: 'I3',
                 Name: 'Orange',
                 Type: 'ingredient',
-                Owner: '',
                 Issuer: 'Org1',
-                currentOwner: 'Org1',
+                Owner: 'Org1',
                 transferTo: ''
             },
             {
                 ID: 'I4',
                 Name: 'Water',
                 Type: 'ingredient',
-                Owner: '',
                 Issuer: 'Org1',
-                currentOwner: 'Org1',
+                Owner: 'Org1',
                 transferTo: ''
             },
             {
                 ID: 'I5',
                 Name: 'Salt',
                 Type: 'ingredient',
-                Owner: '',
                 Issuer: 'Org1',
-                currentOwner: 'Org1',
+                Owner: 'Org1',
                 transferTo: ''
             },
         ];
@@ -67,14 +62,13 @@ class AssetTransfer extends Contract {
     }
 
     // CreateAsset issues a new asset to the world state with given details.
-    async CreateAsset(ctx, id, Name, Type, Owner, Issuer, currentOwner, transferTo) {
+    async CreateAsset(ctx, id, Name, Type, Issuer, Owner, transferTo) {
         const asset = {
             ID: id,
             Name: Name,
             Type: Type,
-            Owner: Owner,
             Issuer: Issuer,
-            currentOwner: currentOwner,
+            Owner: Owner,
             transferTo: transferTo
         };
         ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
@@ -91,7 +85,7 @@ class AssetTransfer extends Contract {
     }
 
     // UpdateAsset updates an existing asset in the world state with provided parameters.
-    async UpdateAsset(ctx, id, Name, Type, Owner, Issuer, currentOwner, transferTo) {
+    async UpdateAsset(ctx, id, Name, Type, Issuer, Owner, transferTo) {
         const exists = await this.AssetExists(ctx, id);
         if (!exists) {
             throw new Error(`The asset ${id} does not exist`);
@@ -102,9 +96,8 @@ class AssetTransfer extends Contract {
             ID: id,
             Name: Name,
             Type: Type,
-            Owner: Owner,
             Issuer: Issuer,
-            currentOwner: currentOwner,
+            Owner: Owner,
             transferTo: transferTo
         };
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedAsset)));
