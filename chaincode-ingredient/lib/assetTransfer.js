@@ -17,40 +17,30 @@ class AssetTransfer extends Contract {
                 Name: 'Apple',
                 Type: 'ingredient',
                 Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
             },
             {
                 ID: 'I2',
                 Name: 'Sugar',
                 Type: 'ingredient',
                 Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
             },
             {
                 ID: 'I3',
                 Name: 'Orange',
                 Type: 'ingredient',
                 Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
             },
             {
                 ID: 'I4',
                 Name: 'Water',
                 Type: 'ingredient',
                 Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
             },
             {
                 ID: 'I5',
                 Name: 'Salt',
                 Type: 'ingredient',
                 Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
             },
         ];
 
@@ -62,14 +52,12 @@ class AssetTransfer extends Contract {
     }
 
     // CreateAsset issues a new asset to the world state with given details.
-    async CreateAsset(ctx, id, Name, Type, Issuer, Owner, transferTo) {
+    async CreateAsset(ctx, id, Name, Type, Issuer) {
         const asset = {
             ID: id,
             Name: Name,
             Type: Type,
             Issuer: Issuer,
-            Owner: Owner,
-            transferTo: transferTo
         };
         ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
         return JSON.stringify(asset);
@@ -97,8 +85,6 @@ class AssetTransfer extends Contract {
             Name: Name,
             Type: Type,
             Issuer: Issuer,
-            Owner: Owner,
-            transferTo: transferTo
         };
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedAsset)));
     }
