@@ -13,44 +13,28 @@ class AssetTransfer extends Contract {
     async InitLedger(ctx) {
         const assets = [
             {
-                ID: 'I1',
-                Name: 'Apple',
-                Type: 'ingredient',
-                Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
+                ID: 'P1',
+                Name: 'Candied Apples',
+                Type: 'Product',
+                madeOf:['I1','I2'],
+                Issuer: 'Org2',
+                Owner: 'Org2'
             },
             {
-                ID: 'I2',
-                Name: 'Sugar',
-                Type: 'ingredient',
-                Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
+                ID: 'P2',
+                Name: 'Orange Juice',
+                Type: 'Product',
+                madeOf:['I3','I2'],
+                Issuer: 'Org2',
+                Owner: 'Org2'
             },
             {
-                ID: 'I3',
-                Name: 'Orange',
-                Type: 'ingredient',
-                Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
-            },
-            {
-                ID: 'I4',
-                Name: 'Water',
-                Type: 'ingredient',
-                Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
-            },
-            {
-                ID: 'I5',
-                Name: 'Salt',
-                Type: 'ingredient',
-                Issuer: 'Org1',
-                Owner: 'Org1',
-                transferTo: ''
+                ID: 'P3',
+                Name: 'Salted Lemonade',
+                Type: 'Product',
+                madeOf:['I3','I4','I5','I6'],
+                Issuer: 'Org2',
+                Owner: 'Org2'
             },
         ];
 
@@ -62,14 +46,15 @@ class AssetTransfer extends Contract {
     }
 
     // CreateAsset issues a new asset to the world state with given details.
-    async CreateAsset(ctx, id, Name, Type, Issuer, Owner, transferTo) {
+    async CreateAsset(ctx, id, Name, Type,madeOf,Issuer, Owner) {
+        madeOf= madeOf.split(',');
         const asset = {
             ID: id,
             Name: Name,
             Type: Type,
+            madeOf:madeOf,
             Issuer: Issuer,
-            Owner: Owner,
-            transferTo: transferTo
+            Owner: Owner
         };
         ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
         return JSON.stringify(asset);
@@ -85,20 +70,21 @@ class AssetTransfer extends Contract {
     }
 
     // UpdateAsset updates an existing asset in the world state with provided parameters.
-    async UpdateAsset(ctx, id, Name, Type, Issuer, Owner, transferTo) {
+    async UpdateAsset(ctx, id, Name, Type, madeOf,Issuer, Owner) {
         const exists = await this.AssetExists(ctx, id);
         if (!exists) {
             throw new Error(`The asset ${id} does not exist`);
         }
 
         // overwriting original asset with new asset
+        madeOf= madeOf.split(',');
         const updatedAsset = {
             ID: id,
             Name: Name,
             Type: Type,
+            madeOf:madeOf,
             Issuer: Issuer,
-            Owner: Owner,
-            transferTo: transferTo
+            Owner: Owner
         };
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedAsset)));
     }
@@ -146,8 +132,6 @@ class AssetTransfer extends Contract {
         }
         return JSON.stringify(allResults);
     }
-
-
 }
 
 module.exports = AssetTransfer;
