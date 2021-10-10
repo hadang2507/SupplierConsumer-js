@@ -8,10 +8,10 @@
 
 const { Contract } = require('fabric-contract-api');
 
-class AssetTransfer extends Contract {
+class OrderTransfer extends Contract {
 
     async InitLedger(ctx) {
-        const assets = [
+        const Orders = [
             {
                 ID: 'O1',
                 Name: 'Order1',
@@ -44,17 +44,17 @@ class AssetTransfer extends Contract {
             },
         ];
 
-        for (const asset of assets) {
-            asset.docType = 'asset';
-            await ctx.stub.putState(asset.ID, Buffer.from(JSON.stringify(asset)));
-            console.info(`Asset ${asset.ID} initialized`);
+        for (const Order of Orders) {
+            Order.docType = 'Order';
+            await ctx.stub.putState(Order.ID, Buffer.from(JSON.stringify(Order)));
+            console.info(`Order ${Order.ID} initialized`);
         }
     }
 
-    // CreateAsset issues a new asset to the world state with given details.
-    async CreateAsset(ctx, id, Name, Type,Contains,Issuer, Owner,shippingStatus, transferTo) {
+    // CreateOrder issues a new Order to the world state with given details.
+    async CreateOrder(ctx, id, Name, Type,Contains,Issuer, Owner,shippingStatus, transferTo) {
         Contains= Contains.split(',');
-        const asset = {
+        const Order = {
             ID: id,
             Name: Name,
             Type: Type,
@@ -64,29 +64,29 @@ class AssetTransfer extends Contract {
             shippingStatus:shippingStatus,
             transferTo: transferTo
         };
-        ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
-        return JSON.stringify(asset);
+        ctx.stub.putState(id, Buffer.from(JSON.stringify(Order)));
+        return JSON.stringify(Order);
     }
 
-    // ReadAsset returns the asset stored in the world state with given id.
-    async ReadAsset(ctx, id) {
-        const assetJSON = await ctx.stub.getState(id); // get the asset from chaincode state
-        if (!assetJSON || assetJSON.length === 0) {
-            throw new Error(`The asset ${id} does not exist`);
+    // ReadOrder returns the Order stored in the world state with given id.
+    async ReadOrder(ctx, id) {
+        const OrderJSON = await ctx.stub.getState(id); // get the Order from chaincode state
+        if (!OrderJSON || OrderJSON.length === 0) {
+            throw new Error(`The Order ${id} does not exist`);
         }
-        return assetJSON.toString();
+        return OrderJSON.toString();
     }
 
-    // UpdateAsset updates an existing asset in the world state with provided parameters.
-    async UpdateAsset(ctx, id, Name, Type, Contains,Issuer, Owner,shippingStatus, transferTo) {
-        const exists = await this.AssetExists(ctx, id);
+    // UpdateOrder updates an existing Order in the world state with provided parameters.
+    async UpdateOrder(ctx, id, Name, Type, Contains,Issuer, Owner,shippingStatus, transferTo) {
+        const exists = await this.OrderExists(ctx, id);
         if (!exists) {
-            throw new Error(`The asset ${id} does not exist`);
+            throw new Error(`The Order ${id} does not exist`);
         }
 
-        // overwriting original asset with new asset
+        // overwriting original Order with new Order
         Contains= Contains.split(',');
-        const updatedAsset = {
+        const updatedOrder = {
             ID: id,
             Name: Name,
             Type: Type,
@@ -96,36 +96,36 @@ class AssetTransfer extends Contract {
             shippingStatus:shippingStatus,
             transferTo: transferTo
         };
-        return ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedAsset)));
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(updatedOrder)));
     }
 
-    // DeleteAsset deletes an given asset from the world state.
-    async DeleteAsset(ctx, id) {
-        const exists = await this.AssetExists(ctx, id);
+    // DeleteOrder deletes an given Order from the world state.
+    async DeleteOrder(ctx, id) {
+        const exists = await this.OrderExists(ctx, id);
         if (!exists) {
-            throw new Error(`The asset ${id} does not exist`);
+            throw new Error(`The Order ${id} does not exist`);
         }
         return ctx.stub.deleteState(id);
     }
 
-    // AssetExists returns true when asset with given ID exists in world state.
-    async AssetExists(ctx, id) {
-        const assetJSON = await ctx.stub.getState(id);
-        return assetJSON && assetJSON.length > 0;
+    // OrderExists returns true when Order with given ID exists in world state.
+    async OrderExists(ctx, id) {
+        const OrderJSON = await ctx.stub.getState(id);
+        return OrderJSON && OrderJSON.length > 0;
     }
 
-    // TransferAsset updates the owner field of asset with given id in the world state.
-    async TransferAsset(ctx, id, newOwner) {
-        const assetString = await this.ReadAsset(ctx, id);
-        const asset = JSON.parse(assetString);
-        asset.Owner = newOwner;
-        return ctx.stub.putState(id, Buffer.from(JSON.stringify(asset)));
+    // TransferOrder updates the owner field of Order with given id in the world state.
+    async TransferOrder(ctx, id, newOwner) {
+        const OrderString = await this.ReadOrder(ctx, id);
+        const Order = JSON.parse(OrderString);
+        Order.Owner = newOwner;
+        return ctx.stub.putState(id, Buffer.from(JSON.stringify(Order)));
     }
 
-    // GetAllAssets returns all assets found in the world state.
-    async GetAllAssets(ctx) {
+    // GetAllOrders returns all Orders found in the world state.
+    async GetAllOrders(ctx) {
         const allResults = [];
-        // range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+        // range query with empty string for startKey and endKey does an open-ended query of all Orders in the chaincode namespace.
         const iterator = await ctx.stub.getStateByRange('', '');
         let result = await iterator.next();
         while (!result.done) {
@@ -144,4 +144,4 @@ class AssetTransfer extends Contract {
     }
 }
 
-module.exports = AssetTransfer;
+module.exports = OrderTransfer;

@@ -1,13 +1,12 @@
 const express = require("express")
-const app = express()
+const bodyParser  = require("body-parser")
 const router = express.Router()
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
-
+router.use(cookieParser())
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(express.json());
 // api route
 const addIngredient = require("./addIngredient_Org1")
 
