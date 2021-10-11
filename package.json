@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "fabric-ca-client": "^2.2.9",
+    "fabric-contract-api": "^2.2.2",
+    "fabric-network": "^2.2.9",
+    "fabric-shim": "^2.2.2"
+  }
+}

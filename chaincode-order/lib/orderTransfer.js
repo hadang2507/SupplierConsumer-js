@@ -78,7 +78,7 @@ class OrderTransfer extends Contract {
     }
 
     // UpdateOrder updates an existing Order in the world state with provided parameters.
-    async UpdateOrder(ctx, id, Name, Type, Contains,Issuer, Owner,shippingStatus, transferTo) {
+    async UpdateOrder(ctx, id, Name, Type, Contains, Issuer, Owner,shippingStatus, transferTo) {
         const exists = await this.OrderExists(ctx, id);
         if (!exists) {
             throw new Error(`The Order ${id} does not exist`);
