@@ -40,7 +40,7 @@ router.get("/", async function (req, res){
 			console.log('*** Result: committed');
 
 			console.log('\n--> Submit Transaction: CreateProduct, creates new asset with id, Name, Type, madeOf, Issuer, Owner arguments');
-			result = await contract.submitTransaction('CreateProduct', 'I23', 'blockchain', 'abc', '', 'Org1', '', '' );
+			result = await contract.submitTransaction('CreateProduct', 'I23', 'blockchain', 'abc', '', 'Org1', '');
 			console.log('*** Result: committed');
 			if (`${result}` !== '') {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
