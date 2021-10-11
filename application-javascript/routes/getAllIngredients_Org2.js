@@ -1,3 +1,10 @@
+/* Function to get list of Ingredient for Organization 2 (Supplier)
+
+   Creator: Nguyen Phan Yen Ngan
+
+   Day created: 11/10/2021
+
+*/
 
 'use strict';
 
@@ -44,10 +51,12 @@ router.get("/", async function (req, res){
 
 			const contract = network.getContract(chaincodeName);
 
+			//Initialize a set of data
 			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of ingredients on the ledger');
 			await contract.submitTransaction('InitLedger');
 			console.log('*** Result: committed');
 
+			//Function to get all ingredients
 			console.log('\n--> Evaluate Transaction: GetAllIngredients, function returns all the current ingredients on the ledger');
 			result = await contract.evaluateTransaction('GetAllIngredients');
 			console.log(`*** Result: ${prettyJSONString(result.toString())}`);

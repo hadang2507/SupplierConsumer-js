@@ -1,8 +1,11 @@
-/*
- * Copyright IBM Corp. All Rights Reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
+/* Function to check if Ingredient exists for Organization 2 (Supplier)
+
+   Creator: Nguyen Phan Yen Ngan
+
+   Day created: 11/10/2021
+
+*/
+
 
 'use strict';
 
@@ -49,11 +52,12 @@ router.get("/", async function (req, res){
 
 			const contract = network.getContract(chaincodeName);
 
+			//Initialize a set of data
 			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of ingredients on the ledger');
 			await contract.submitTransaction('InitLedger');
 			console.log('*** Result: committed');
 
-
+			//Function to check if an ingredient exists, return true if yes
 			console.log('\n--> Evaluate Transaction: IngredientExists, function returns "true" if an ingredient with given ID exist');
 			result = await contract.evaluateTransaction('IngredientExists', 'I1');
 			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
