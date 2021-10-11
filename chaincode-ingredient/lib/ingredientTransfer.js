@@ -73,7 +73,7 @@ class AssetTransfer extends Contract {
     }
 
     // UpdateIngredient updates an existing Ingredient in the world state with provided parameters.
-    async UpdateIngredient(ctx, id, Name, Type, Issuer, Owner, transferTo) {
+    async UpdateIngredient(ctx, id, Name, Type, Issuer) {
         const exists = await this.IngredientExists(ctx, id);
         if (!exists) {
             throw new Error(`The Ingredient ${id} does not exist`);

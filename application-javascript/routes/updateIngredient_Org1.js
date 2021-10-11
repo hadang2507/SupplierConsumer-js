@@ -8,13 +8,13 @@ const { Gateway, Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const path = require('path');
 const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../../test-application/javascript/CAUtil.js');
-const { buildCCPOrg3, buildWallet } = require('../../../test-application/javascript/AppUtil.js');
+const { buildCCPOrg1, buildWallet } = require('../../../test-application/javascript/AppUtil.js');
 
-const channelName = 'mychannel2';
-const chaincodeName = 'updateShippingStatus';
-const mspOrg3 = 'Org3MSP';
+const channelName = 'mychannel1';
+const chaincodeName = 'addIngredient';
+const mspOrg1 = 'Org1MSP';
 const walletPath = path.join(__dirname, 'wallet');
-const org3UserId = 'org3User';
+const org1UserId = 'org1User';
 
 function prettyJSONString(inputString) {
 	return JSON.stringify(JSON.parse(inputString), null, 2);
@@ -22,17 +22,17 @@ function prettyJSONString(inputString) {
 
 router.get("/", async function (req, res){
   try {
-		const ccp = buildCCPOrg3();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org3.example.com');
+		const ccp = buildCCPOrg1();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
 		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg3);
-		await registerAndEnrollUser(caClient, wallet, mspOrg3, org3UserId, 'org3.department1');
+		await enrollAdmin(caClient, wallet, mspOrg1);
+		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org3UserId,
+				identity: org1UserId,
 				discovery: { enabled: true, asLocalhost: true }
 			});
 
@@ -40,18 +40,19 @@ router.get("/", async function (req, res){
 			const contract = network.getContract(chaincodeName);
 
 			//Update existed asset
-			console.log('\n--> Submit Transaction: UpdateOrder O2, change the shippingStatus to Delivering');
-			await contract.submitTransaction('UpdateOrder', 'O2', 'Order2', 'Order', ['P3','P2'], 'Org2', 'Org2', 'Delivering', ' ');
+			console.log('\n--> Submit Transaction: UpdateIngredient I3, change the Issuer to Org2');
+			await contract.submitTransaction('UpdateIngredient', 'I3', 'Orange', 'ingredient', 'Org2');
 			console.log('*** Result: committed');
 
 			//Throw an error when update non-existed asset
 			try {
-				console.log('\n--> Submit Transaction: UpdateOrder O23, O23 does not exist and should return an error');
-				await contract.submitTransaction('UpdateOrder', 'O23', 'Order2', 'Order', ['P3','P2'], 'Org2', 'Org2', 'Delivering', ' ');
+				console.log('\n--> Submit Transaction: UpdateIngredient I50, I50 does not exist and should return an error');
+				await contract.submitTransaction('UpdateIngredient', 'I50', 'Orange', 'ingredient', 'Org2');
 				console.log('******** FAILED to return an error');
 			} catch (error) {
 				console.log(`*** Successfully caught the error: \n ${error}`);
-			}
+			}	
+
 		} finally {
 			gateway.disconnect();
 		}
