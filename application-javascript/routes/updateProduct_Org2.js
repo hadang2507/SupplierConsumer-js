@@ -7,7 +7,7 @@ const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../tes
 const { buildCCPOrg2, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 
 const channelName = 'mychannel2';
-const chaincodeName = 'addIngredient';
+const chaincodeName = 'updateProduct';
 const mspOrg2 = 'Org2MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const org2UserId = 'org2User';
