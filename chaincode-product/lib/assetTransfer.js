@@ -8,7 +8,7 @@
 
 const { Contract } = require('fabric-contract-api');
 
-class ProductTransfer extends Contract {
+class AssetTransfer extends Contract {
 
     async InitLedger(ctx) {
         const Products = [
@@ -134,4 +134,4 @@ class ProductTransfer extends Contract {
     }
 }
 
-module.exports = ProductTransfer;
+module.exports = AssetTransfer;

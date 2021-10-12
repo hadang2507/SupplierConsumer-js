@@ -1,8 +1,15 @@
 var express = require('express');
 var app = express();
+var cookieParser = require('cookie-parser');
 
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
-const apiRoutes = require("./routes/apiRoutes")
+app.use(cookieParser())
+
+const apiRoutes = require("./apiRoutes")
 
 app.use("/", apiRoutes)
 

@@ -137,4 +137,4 @@ class AssetTransfer extends Contract {
 
 }
 
-module.exports = IngredientTransfer;
+module.exports = AssetTransfer;
