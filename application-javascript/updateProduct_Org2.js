@@ -1,3 +1,11 @@
+/* Function to update information of Product for Organization 2 (Supplier)
+
+   Creator: Nguyen Phan Yen Ngan
+
+   Day created: 10/10/2021
+
+*/
+
 'use strict';
 
 const { Gateway, Wallets } = require('fabric-network');
@@ -42,15 +50,14 @@ router.get("/", async function (req, res){
 
 			const contract = network.getContract(chaincodeName);
 
-
+			//Initialize set of data
 			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger');
 			await contract.submitTransaction('InitLedger');
 			console.log('*** Result: committed');
 
-		
-
+			//Function to update product
 			console.log('\n--> Submit Transaction: UpdateProduct, update a product with id, Name, Type, madeOf, Issuer, Owner arguments');
-			result = await contract.submitTransaction('UpdateProduct', 'I23', 'blockchain', 'abc', '', 'Org1', '', '' );
+			result = await contract.submitTransaction('UpdateProduct', 'I23', 'blockchain', 'abc', '', 'Org1', '');
 			console.log('*** Result: committed');
 			if (`${result}` !== '') {
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);

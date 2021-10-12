@@ -1,10 +1,11 @@
-/* Function to add Product for Organization 2 (Supplier)
+/* Function to check if Ingredient exists for Organization 2 (Supplier)
 
    Creator: Nguyen Phan Yen Ngan
 
-   Day created: 10/10/2021
+   Day created: 11/10/2021
 
 */
+
 
 'use strict';
 
@@ -15,7 +16,7 @@ const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../tes
 const { buildCCPOrg2, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 
 const channelName = 'mychannel2';
-const chaincodeName = 'addProduct';
+const chaincodeName = 'IngredientExists';
 const mspOrg2 = 'Org2MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const org2UserId = 'org2User';
@@ -28,37 +29,37 @@ function prettyJSONString(inputString) {
 router.get("/", async function (req, res){
 	try {
 		const ccp = buildCCPOrg2();
+
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+
 		const wallet = await buildWallet(Wallets, walletPath);
+
 		await enrollAdmin(caClient, wallet, mspOrg2);
+
 		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
 		const gateway = new Gateway();
 
 		try {
+
 			await gateway.connect(ccp, {
 				wallet,
 				identity: org2UserId,
 				discovery: { enabled: true, asLocalhost: true } 
 			});
+
 			const network = await gateway.getNetwork(channelName);
+
 			const contract = network.getContract(chaincodeName);
 
 			//Initialize a set of data
-			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of products on the ledger');
+			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of ingredients on the ledger');
 			await contract.submitTransaction('InitLedger');
 			console.log('*** Result: committed');
 
-			//Function for Org2 to add new Product
-			console.log('\n--> Submit Transaction: CreateProduct, creates new asset with id, Name, Type, madeOf, Issuer, Owner arguments');
-			result = await contract.submitTransaction('CreateProduct', 'I23', 'blockchain', 'abc', '', 'Org1', '');
-			console.log('*** Result: committed');
-			if (`${result}` !== '') {
-				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-			}
-
-			//Function to check
-			console.log('\n--> Evaluate Transaction: GetAllProducts, function returns all the current products on the ledger');
-			let result = await contract.evaluateTransaction('GetAllProducts');
+			//Function to check if an ingredient exists, return true if yes
+			console.log('\n--> Evaluate Transaction: IngredientExists, function returns "true" if an ingredient with given ID exist');
+			result = await contract.evaluateTransaction('IngredientExists', 'I1');
 			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 
 		} finally {
