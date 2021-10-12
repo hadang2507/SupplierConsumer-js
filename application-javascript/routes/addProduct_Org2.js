@@ -1,3 +1,11 @@
+/* Function to add Product for Organization 2 (Supplier)
+
+   Creator: Nguyen Phan Yen Ngan
+
+   Day created: 10/10/2021
+
+*/
+
 'use strict';
 
 const { Gateway, Wallets } = require('fabric-network');
@@ -35,10 +43,12 @@ router.get("/", async function (req, res){
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract(chaincodeName);
 
+			//Initialize a set of data
 			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of products on the ledger');
 			await contract.submitTransaction('InitLedger');
 			console.log('*** Result: committed');
 
+			//Function for Org2 to add new Product
 			console.log('\n--> Submit Transaction: CreateProduct, creates new asset with id, Name, Type, madeOf, Issuer, Owner arguments');
 			result = await contract.submitTransaction('CreateProduct', 'I23', 'blockchain', 'abc', '', 'Org1', '');
 			console.log('*** Result: committed');
@@ -46,6 +56,7 @@ router.get("/", async function (req, res){
 				console.log(`*** Result: ${prettyJSONString(result.toString())}`);
 			}
 
+			//Function to check
 			console.log('\n--> Evaluate Transaction: GetAllProducts, function returns all the current products on the ledger');
 			let result = await contract.evaluateTransaction('GetAllProducts');
 			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
