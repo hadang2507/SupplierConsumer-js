@@ -46,19 +46,121 @@ router.get("/create", async function (req, res){
 			const contract = network.getContract(chaincodeName);
 
 			//Create new asset
-			console.log('\n--> Submit Transaction: InitLedger, function creates the initial set of assets on the ledger');
-			await contract.submitTransaction('InitLedger');
-			console.log('*** Result: committed');
-			res.send('\n--> Submit Transaction: CreateIngredient, creates new asset with ID, Name, Type, Issuer arguments');
-			result = await contract.submitTransaction('CreateIngredient', id, name, type, issuer);
-			res.send('*** Result: committed');
+			//await contract.submitTransaction('InitLedger');
+			await contract.submitTransaction('CreateIngredient', id, name, type, issuer);
+			res.send("Create Ingredient Sucessfully");
 		} finally {
 			gateway.disconnect();
 		}
 	} catch (error) {
-		res.send("error");
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
+
+router.get("/update", async function (req, res){
+  try {
+		const id = req.query.iid;
+		const name = req.query.iname;
+		const type = req.query.itype;
+		
+		const ccp = buildCCPOrg1();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+		const wallet = await buildWallet(Wallets, walletPath);
+		await enrollAdmin(caClient, wallet, mspOrg1);
+		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org1UserId,
+				discovery: { enabled: true, asLocalhost: true }
+			});
+
+			const network = await gateway.getNetwork(channelName);
+			const contract = network.getContract(chaincodeName);
+
+			
+			//Throw an error when update non-existed asset
+			try {
+				await contract.submitTransaction('UpdateIngredient', id, name, type, 'Org2');
+				res.send("Update Sucessfully")
+			} catch (error) {
+				res.send("Caught the error: \n ${error}");
+			}	
+
+		} finally {
+			gateway.disconnect();
+		}
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+})
+
+router.get("/getAll", async function (req, res){
+  try {
+		const ccp = buildCCPOrg1();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+		const wallet = await buildWallet(Wallets, walletPath);
+		await enrollAdmin(caClient, wallet, mspOrg1);
+		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org1UserId,
+				discovery: { enabled: true, asLocalhost: true }
+			});
+
+			const network = await gateway.getNetwork(channelName);
+			const contract = network.getContract(chaincodeName);
+		
+			//Return all asset data
+			let result = await contract.evaluateTransaction('GetAllIngredients');
+			res.send(prettyJSONString(result.toString()));
+
+		} finally {
+			gateway.disconnect();
+		}
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+})
+
+router.get("/delete", async function(req, res){
+	try {
+
+		const id = req.query.iid
+
+		const ccp = buildCCPOrg1();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+		const wallet = await buildWallet(Wallets, walletPath);
+		await enrollAdmin(caClient, wallet, mspOrg1);
+		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org1UserId,
+				discovery: { enabled: true, asLocalhost: true }
+			});
+
+			const network = await gateway.getNetwork(channelName);
+			const contract = network.getContract(chaincodeName);
+		
+			//Delete ingredient
+			await contract.evaluateTransaction('DeleteIngredient',id);
+			res.send("Delete Successfully");
+
+		} finally {
+			gateway.disconnect();
+		}
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+})
+
 
 module.exports = router

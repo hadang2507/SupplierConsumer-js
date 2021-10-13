@@ -2,10 +2,12 @@ const express = require("express")
 const router = express.Router()
 const path = require('path');
 const IngredientRoute = require("./ingredient_Org1.js")
+const ProductRoute = require("./product_Org2.js")
 
 // api route
 
 router.use('/ingredient', IngredientRoute)
+router.use('/product', ProductRoute)
 
 router.get('/', (req, res) => {
   res.sendFile('index.html', {
@@ -40,7 +42,6 @@ router.get('/retailer',(req, res)=>{
   res.sendFile('retailer.html',{
     root: path.join(__dirname, './pages')
   })
-  res.send("ABCDSKFSFKSJF")
   console.log("Retailer Page")
 })
 

@@ -6,6 +6,53 @@
 </head>
 <body>
   <h1>This is Supplier Homepage</h1>
-  
+  <h3>Add Products</h3>
+  <form action="product/create" method="get">
+    ID:
+    <input name="pid" type="text" required>
+    Name:
+    <input name="pname" type="text" required>
+    Type:
+    <input name="ptype" type="text">
+    Made of:
+    <input name="pmadeof" type="text" required>
+    Issuer:
+    <input name="pissuer" required value="Org2" required>
+    Owner:
+    <input name="powner" required value="Org2" required>
+    <input type="submit" value="Add">
+  </form>
+  <h3>Go to list of Products page</h3>
+  <a href="product/getAll">Show data</a>
+  <h3>Update Product</h3>
+  <form action="product/update" method="get">
+    ID:
+    <input name="pid" type="text" required>
+    New Name:
+    <input name="pname" type="text" required>
+    Made of:
+    <input name="pmadeof" type="text" required>
+    <input type="submit" value="Modify">
+  </form>
+  <h3>Create new Deliver Order for Retailer Request</h3>
+  <form action="order/create" method="get">
+    ID:
+    <input name="id" type="text" required>
+    Name:
+    <input name="name" type="text" required>
+    Type:
+    <input name="type" type="text">
+    Products contained:
+    <input name="contain" type="text" required>
+    Issuer:
+    <input name="issuer" required value="Org2" required>
+    Owner:
+    <input name="owner" required value="Org2" required>
+    Shipping status:
+    <input name="status" required value="Requested" required>
+    Transfer to:
+    <input name="transferto" required value="Retailer" required>
+    <input type="submit" value="Create Order">
+  </form>
 </body>
 </html>
