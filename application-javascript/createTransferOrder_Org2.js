@@ -20,7 +20,7 @@ function prettyJSONString(inputString) {
 	return JSON.stringify(JSON.parse(inputString), null, 2);
 }
 
-router.get("/", async function (req, res){
+router.get("/create", async function (req, res){
     try {
         const ccp = buildCCPOrg2();
         const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');

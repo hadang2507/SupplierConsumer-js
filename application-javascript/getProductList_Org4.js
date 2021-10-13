@@ -1,10 +1,3 @@
-/* Function to get list of Products for Organization 4 (Retailer)
-
-   Creator: Nguyen Phan Yen Ngan
-
-   Day created: 11/10/2021
-
-*/
 
 
 'use strict';

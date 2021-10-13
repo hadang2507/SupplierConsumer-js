@@ -1,10 +1,4 @@
-/* Function to get list of Products for Organization 4 (Retailer)
 
-   Creator: Nguyen Phan Yen Ngan
-
-   Day created: 11/10/2021
-
-*/
 
 
 'use strict';
@@ -16,7 +10,7 @@ const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../tes
 const { buildCCPOrg4, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 
 const channelName = 'mychannel2';
-const chaincodeName = 'getAllProducts';
+const chaincodeName = 'product';
 const mspOrg4 = 'Org4MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const org4UserId = 'org4User';

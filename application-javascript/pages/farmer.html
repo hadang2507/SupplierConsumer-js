@@ -18,6 +18,23 @@
     <input name="iissuer" required value="Org1">
     <input type="submit" value="Add">
   </form>
-  
+  <h3>Go to list of Ingredients page</h3>
+  <a href="ingredient/getAll">Show data</a>
+  <h3>Update Ingredient</h3>
+  <form action="ingredient/update" method="get">
+    ID:
+    <input name="iid" type="text" required>
+    New Name:
+    <input name="iname" type="text" required>
+    New Type:
+    <input name="itype">
+    <input type="submit" value="Update">
+  </form>
+  <h3>Delete Ingredient</h3>
+  <form action="ingredient/delete" method="get">
+    ID of Ingredient want to Delete:
+    <input name="iid" type="text" required>
+    <input type="submit" value="Delete">
+  </form>
 </body>
 </html>

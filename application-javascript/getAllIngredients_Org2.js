@@ -1,11 +1,3 @@
-/* Function to get list of Ingredient for Organization 2 (Supplier)
-
-   Creator: Nguyen Phan Yen Ngan
-
-   Day created: 11/10/2021
-
-*/
-
 'use strict';
 
 const { Gateway, Wallets } = require('fabric-network');
@@ -15,7 +7,7 @@ const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../tes
 const { buildCCPOrg2, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 
 const channelName = 'mychannel2';
-const chaincodeName = 'getAllIngredients';
+const chaincodeName = 'ingredient';
 const mspOrg2 = 'Org2MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const org2UserId = 'org2User';

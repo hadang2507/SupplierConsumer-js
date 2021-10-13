@@ -1,11 +1,3 @@
-/* Function to add Product for Organization 2 (Supplier)
-
-   Creator: Nguyen Phan Yen Ngan
-
-   Day created: 10/10/2021
-
-*/
-
 'use strict';
 
 const { Gateway, Wallets } = require('fabric-network');
@@ -15,17 +7,20 @@ const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../tes
 const { buildCCPOrg2, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 
 const channelName = 'mychannel2';
-const chaincodeName = 'addProduct';
+const chaincodeName = 'product';
 const mspOrg2 = 'Org2MSP';
 const walletPath = path.join(__dirname, 'wallet');
 const org2UserId = 'org2User';
+
+const express = require("express")
+const router = express.Router()
 
 function prettyJSONString(inputString) {
 	return JSON.stringify(JSON.parse(inputString), null, 2);
 }
 
 
-router.get("/", async function (req, res){
+router.get("/create", async function (req, res){
 	try {
 		const ccp = buildCCPOrg2();
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
@@ -68,5 +63,49 @@ router.get("/", async function (req, res){
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
+router.get("/update", async function (req, res){
+})
+
+router.get("/getAll", async function (req, res){
+	try {
+		
+		const ccp = buildCCPOrg2();
+
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+
+		const wallet = await buildWallet(Wallets, walletPath);
+
+		await enrollAdmin(caClient, wallet, mspOrg2);
+
+		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org2UserId,
+				discovery: { enabled: true, asLocalhost: true } 
+			});
+
+			const network = await gateway.getNetwork(channelName);
+
+			const contract = network.getContract(chaincodeName);
+			//Function to get list of current products
+			let result = await contract.evaluateTransaction('GetAllProducts');
+			res.send(prettyJSONString(result.toString()));
+
+
+		} finally {
+			gateway.disconnect();
+		}
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+})
+
+router.get("/delete", async function(req, res){
+})
+
 
 module.exports = router
