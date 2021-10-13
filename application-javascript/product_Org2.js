@@ -9,7 +9,7 @@ const { buildCCPOrg2, buildWallet } = require('../../test-application/javascript
 const channelName = 'mychannel2';
 const chaincodeName = 'product';
 const mspOrg2 = 'Org2MSP';
-const walletPath = path.join(__dirname, 'wallet');
+const walletPath = path.join(__dirname, 'wallet2');
 const org2UserId = 'org2User';
 
 const express = require("express")
