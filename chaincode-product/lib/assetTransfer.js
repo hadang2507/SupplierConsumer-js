@@ -46,7 +46,7 @@ class AssetTransfer extends Contract {
     }
 
     // CreateProduct issues a new Product to the world state with given details.
-    async CreateProduct(ctx, id, Name, Type,madeOf,Issuer, Owner) {
+    async CreateProduct(ctx, id, Name, Type, madeOf, Issuer, Owner) {
         madeOf= madeOf.split(',');
         const Product = {
             ID: id,
@@ -70,7 +70,7 @@ class AssetTransfer extends Contract {
     }
 
     // UpdateProduct updates an existing Product in the world state with provided parameters.
-    async UpdateProduct(ctx, id, Name, Type, madeOf,Issuer, Owner) {
+    async UpdateProduct(ctx, id, Name, Type, madeOf, Issuer, Owner) {
         const exists = await this.ProductExists(ctx, id);
         if (!exists) {
             throw new Error(`The Product ${id} does not exist`);
