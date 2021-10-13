@@ -32,5 +32,25 @@
   <a href="order/getShipping">View Data</a>
   <h3>View All Order</h3>
   <a href="order/getAll">View Data</a>
+  <h3>Accept Request for Shipping Order</h3>
+  <form action="order/update" method="get">
+    ID:
+    <input name="id" type="text" required>
+    Name:
+    <input name="name" type="text" required>
+    Type:
+    <input name="type" type="text">
+    Products contained:
+    <input name="contain" type="text" required>
+    Issuer:
+    <input name="issuer" required value="Org2" required>
+    Owner:
+    <input name="owner" required value="Org4" required>
+    Shipping status:
+    <input name="status" required value="Shipping" required>
+    Transfer to:
+    <input name="transferto" required value="Retailer" required>
+    <input type="submit" value="Create Order">
+  </form>
 </body>
 </html>
