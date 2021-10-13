@@ -45,10 +45,20 @@ router.get("/create", async function (req, res){
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract(chaincodeName);
 
-			//Create new asset
-			//await contract.submitTransaction('InitLedger');
-			await contract.submitTransaction('CreateIngredient', id, name, type, issuer);
-			res.send("Create Ingredient Sucessfully");
+			// CREATE INGREDIENT
+			try {
+				if (!(await contract.submitTransaction("IngredientExists", id))) {
+					//await contract.submitTransaction('InitLedger');
+					await contract.submitTransaction("CreateIngredient", id, name, type, issuer);
+					res.send("Create Ingredient Sucessfully");
+				} else {
+					res.send("Ingredient has already added to the world state")
+				}
+
+			} catch (createError) {
+				res.send("Caught the error: \n ${createError}");
+			}
+
 		} finally {
 			gateway.disconnect();
 		}
@@ -80,13 +90,12 @@ router.get("/update", async function (req, res){
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract(chaincodeName);
 
-			
-			//Throw an error when update non-existed asset
+			// UPDATE INGREDIENT
 			try {
 				await contract.submitTransaction('UpdateIngredient', id, name, type, 'Org2');
 				res.send("Update Sucessfully")
-			} catch (error) {
-				res.send("Caught the error: \n ${error}");
+			} catch (updateError) {
+				res.send("Caught the error: \n ${updateError}");
 			}	
 
 		} finally {
@@ -150,7 +159,7 @@ router.get("/delete", async function(req, res){
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract(chaincodeName);
 		
-			//Delete ingredient
+			// DELETE INGREDIENT
 			await contract.evaluateTransaction('DeleteIngredient',id);
 			res.send("Delete Successfully");
 
