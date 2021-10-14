@@ -122,13 +122,7 @@ class AssetTransfer extends Contract {
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(Order)));
     }
 
-    async QueryOrdersByShippingStatus(ctx, shippingStatus) {
-		let queryString = {};
-		queryString.selector = {};
-		queryString.selector.shippingStatus = shippingStatus;
-		return await this.GetQueryResultForQueryString(ctx, JSON.stringify(queryString)); //shim.success(queryResults);
-	}
-
+    // Get query result from query string
     async GetQueryResultForQueryString(ctx, queryString) {
 		const allResults = [];
         let resultsIterator = await ctx.stub.getQueryResult(queryString);
@@ -147,6 +141,13 @@ class AssetTransfer extends Contract {
         }
         return JSON.stringify(allResults);
 	}
+
+    async QueryOrdersByShippingStatus(ctx, shippingStatus) {
+		let queryString = {};
+		queryString.selector = {};
+		queryString.selector.shippingStatus = shippingStatus;
+		return await this.GetQueryResultForQueryString(ctx, JSON.stringify(queryString)); //shim.success(queryResults);
+    }
 
     // GetAllOrders returns all Orders found in the world state.
     async GetAllOrders(ctx) {
