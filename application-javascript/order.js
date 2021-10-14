@@ -149,5 +149,38 @@ router.get("/tracking", async function (req, res){
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
+
+//View All Orders
+
+router.get("/getAll", async function (req, res){
+	try {
+		const ccp = buildCCPOrg2();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		const wallet = await buildWallet(Wallets, walletPath);
+		await enrollAdmin(caClient, wallet, mspOrg2);
+		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org2UserId,
+				discovery: { enabled: true, asLocalhost: true } 
+			});
+
+			const network = await gateway.getNetwork(channelName);
+			const contract = network.getContract(chaincodeName);
+
+			// GET ALL ORDERS
+			let result = await contract.evaluateTransaction('GetAllOrders');
+			res.send(prettyJSONString(result.toString()));
+
+		} finally {
+			gateway.disconnect();
+		}
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+})
     
 module.exports = router  
