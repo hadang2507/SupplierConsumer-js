@@ -13,7 +13,7 @@ const { buildCCPOrg2, buildWallet } = require('../../test-application/javascript
 const channelName = 'mychannel2';
 const chaincodeName = 'order';
 const mspOrg2 = 'Org2MSP';
-const walletPath = path.join(__dirname, 'wallet');
+const walletPath = path.join(__dirname, 'wallet3');
 const org2UserId = 'org2User';
 
 function prettyJSONString(inputString) {
@@ -113,5 +113,30 @@ router.get("/delete", async function(req, res){
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
-    
+
+router.get("/getAll", async function(req, res){
+	const ccp = buildCCPOrg2();
+	const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+	const wallet = await buildWallet(Wallets, walletPath);
+	await enrollAdmin(caClient, wallet3, mspOrg2);
+	await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+	const gateway = new Gateway();
+
+	try {
+		await gateway.connect(ccp, {
+			wallet,
+			identity: org2UserId,
+			discovery: { enabled: true, asLocalhost: true }
+		});
+
+		const network = await gateway.getNetwork(channelName);
+		const contract = network.getContract(chaincodeName);
+		//Return all asset data
+		let result = await contract.evaluateTransaction('GetAllOrders');
+		res.send(prettyJSONString(result.toString()));
+
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+})
 module.exports = router  
