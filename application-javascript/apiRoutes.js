@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   console.log("Homepage") 
 })
 
-router.post('/farmer',(req, res)=>{
+router.get('/farmer',(req, res)=>{
   res.sendFile('farmer.html',{
     root: path.join(__dirname, './pages')
   })
