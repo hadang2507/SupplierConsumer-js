@@ -52,7 +52,7 @@ class AssetTransfer extends Contract {
             ID: id,
             Name: Name,
             Type: Type,
-            madeOf:madeOf,
+            madeOf: madeOf,
             Issuer: Issuer,
             Owner: Owner
         };

@@ -1,14 +1,14 @@
 const express = require("express")
 const router = express.Router()
 const path = require('path');
-const IngredientRoute = require("./ingredient_Org1.js")
-const ProductRoute = require("./product_Org2.js")
-const OrderRoute = require("./order.js")
+const farmer = require("./farmer.js")
+const supplier = require("./supplier.js")
+const retailer = require("./retailer.js")
 // api route
 
-router.use('/ingredient', IngredientRoute)
-router.use('/product', ProductRoute)
-router.use('/order', OrderRoute)
+router.use('/farmer/action', farmer)
+router.use('/supplier/action', supplier)
+router.use('/retailer/action', retailer)
 
 router.get('/', (req, res) => {
   res.sendFile('index.html', {

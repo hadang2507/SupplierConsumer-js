@@ -19,7 +19,7 @@ class AssetTransfer extends Contract {
                 Contains:['P1','P2'],
                 Issuer: 'Org2',
                 Owner: 'Org2',
-                shippingStatus:'Delivering',
+                shippingStatus:'Shipping',
                 transferTo: ''
             },
             {
@@ -29,7 +29,7 @@ class AssetTransfer extends Contract {
                 Contains:['P3','P2'],
                 Issuer: 'Org2',
                 Owner: 'Org2',
-                shippingStatus:'',
+                shippingStatus:'Requested',
                 transferTo: ''
             },
             {
@@ -39,7 +39,27 @@ class AssetTransfer extends Contract {
                 Contains:['P1','P2','P3'],
                 Issuer: 'Org2',
                 Owner: 'Org2',
-                shippingStatus:'',
+                shippingStatus:'Shipped',
+                transferTo: ''
+            },
+            {
+                ID: 'O4',
+                Name: 'Order4',
+                Type: 'Order',
+                Contains:['P1','P2','P3'],
+                Issuer: 'Org2',
+                Owner: 'Org2',
+                shippingStatus:'Requested',
+                transferTo: ''
+            },
+            {
+                ID: 'O5',
+                Name: 'Order5',
+                Type: 'Order',
+                Contains:['P4','P2'],
+                Issuer: 'Org2',
+                Owner: 'Org2',
+                shippingStatus:'Shipping',
                 transferTo: ''
             },
         ];
