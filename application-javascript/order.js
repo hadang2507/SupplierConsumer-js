@@ -20,6 +20,7 @@ function prettyJSONString(inputString) {
 	return JSON.stringify(JSON.parse(inputString), null, 2);
 }
 
+//Create an order 
 router.get("/create", async function (req, res){
     try {
         const id = req.query.iid;
@@ -80,6 +81,7 @@ router.get("/create", async function (req, res){
     }
 })
 
+//Delete order
 router.get("/delete", async function(req, res){
 	try {
 
@@ -114,29 +116,71 @@ router.get("/delete", async function(req, res){
 	}
 })
 
-router.get("/getAll", async function(req, res){
-	const ccp = buildCCPOrg2();
-	const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-	const wallet = await buildWallet(Wallets, walletPath);
-	await enrollAdmin(caClient, wallet3, mspOrg2);
-	await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
-	const gateway = new Gateway();
-
+//View all orders queried by shipping status ("Delivering", "Delivered", etc.)
+router.get("/tracking", async function (req, res){
 	try {
-		await gateway.connect(ccp, {
-			wallet,
-			identity: org2UserId,
-			discovery: { enabled: true, asLocalhost: true }
-		});
+		const shippingStatus = req.query.ishippingstatus;
 
-		const network = await gateway.getNetwork(channelName);
-		const contract = network.getContract(chaincodeName);
-		//Return all asset data
-		let result = await contract.evaluateTransaction('GetAllOrders');
-		res.send(prettyJSONString(result.toString()));
+		const ccp = buildCCPOrg2();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		const wallet = await buildWallet(Wallets, walletPath);
+		await enrollAdmin(caClient, wallet, mspOrg2);
+		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const gateway = new Gateway();
 
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org2UserId,
+				discovery: { enabled: true, asLocalhost: true }
+			});
+
+			const network = await gateway.getNetwork(channelName);
+			const contract = network.getContract(chaincodeName);
+		
+			//Return all asset data query by shipping status
+			let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', shippingStatus);
+			res.send(prettyJSONString(result.toString()));
+
+		} finally {
+			gateway.disconnect();
+		}
 	} catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
+
+//View All Orders
+
+router.get("/getAll", async function (req, res){
+	try {
+		const ccp = buildCCPOrg2();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		const wallet = await buildWallet(Wallets, walletPath);
+		await enrollAdmin(caClient, wallet, mspOrg2);
+		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org2UserId,
+				discovery: { enabled: true, asLocalhost: true } 
+			});
+
+			const network = await gateway.getNetwork(channelName);
+			const contract = network.getContract(chaincodeName);
+
+			// GET ALL ORDERS
+			let result = await contract.evaluateTransaction('GetAllOrders');
+			res.send(prettyJSONString(result.toString()));
+
+		} finally {
+			gateway.disconnect();
+		}
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+})
+    
 module.exports = router  

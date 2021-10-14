@@ -1,2 +1,2 @@
 cd .
-./network.sh deployCC -ccn addIngredient -ccp ../SupplierConsumer_js/chaincode-javascript/ -ccl javascript
+./network.sh deployCC -ccn ingredient -ccp ../../SupplierConsumer-js/chaincode-javascript/ -ccl javascript

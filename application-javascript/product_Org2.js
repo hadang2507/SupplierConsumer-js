@@ -8,6 +8,8 @@ const { buildCCPOrg2, buildWallet } = require('../../test-application/javascript
 
 const channelName = 'mychannel2';
 const chaincodeName = 'product';
+// (TRYING)
+const chaincodeNameIngredient = 'ingredient'
 const mspOrg2 = 'Org2MSP';
 const walletPath = path.join(__dirname, 'wallet2');
 const org2UserId = 'org2User';
@@ -18,6 +20,46 @@ const router = express.Router()
 function prettyJSONString(inputString) {
 	return JSON.stringify(JSON.parse(inputString), null, 2);
 }
+
+// (TRYING): Query all ingredients used to make a product
+router.get("/IngredientsByProduct", async function (req, res) {
+	try {
+		const ccp = buildCCPOrg2();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		const wallet = await buildWallet(Wallets, walletPath);
+		await enrollAdmin(caClient, wallet, mspOrg2);
+		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const gateway = new Gateway();
+	
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org2UserId,
+				discovery: { enabled: true, asLocalhost: true } 
+			});
+	
+			const network = await gateway.getNetwork(channelName);
+			// Get ingredient chaincode
+			const contractIngred = network.getContract(chaincodeNameIngredient);
+			const contractProduct = network.getContract(chaincodeName);
+
+			// How to get these ingredients's ID from product chaincode???
+			console.log('\n--> Submit Transaction: QueryProductsByID, query a product by its ID');
+			productResult = await contractProduct.evaluateTransaction('QueryProductsByID', id);
+			for (const IngredID of productResult.madeOf) {
+				// Query ingredient based on ID associtated with a product (Okay)
+				let ingredientResult = await contractIngred.evaluateTransaction('QueryIngredientsByID', IngredID);
+				res.send(prettyJSONString(ingredientResult.toString()));
+			}
+
+		} finally {
+			gateway.disconnect();
+		}
+
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+})
 
 
 router.get("/create", async function (req, res){
@@ -200,6 +242,7 @@ router.get("/delete", async function(req, res){
         console.error(`******** FAILED to run the application: ${error}`);
     }
 })
+
 
 
 module.exports = router
