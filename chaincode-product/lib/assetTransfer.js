@@ -132,6 +132,37 @@ class AssetTransfer extends Contract {
         }
         return JSON.stringify(allResults);
     }
+
+    // (TRYING)
+    async GetQueryResultForQueryString(ctx, queryString) {
+        const allResults = [];
+        // Query all the result matching the "queryString" condition
+        let resultsIterator = await ctx.stub.getQueryResult(queryString);
+		let result = await resultsIterator.next();
+        while (!result.done) {
+            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            allResults.push({ Key: result.value.key, Record: record });
+            result = await resultsIterator.next();
+        }
+        return JSON.stringify(allResults);
+    }
+
+    // Query the product by the gived product's ID
+    async QueryProductsByID(ctx, ID) {
+		let queryString = {};
+		queryString.selector = {};
+		queryString.selector.ID = ID;
+		return await this.GetQueryResultForQueryString(ctx, JSON.stringify(queryString)); //shim.success(queryResults);
+    }
+
 }
+
 
 module.exports = AssetTransfer;
