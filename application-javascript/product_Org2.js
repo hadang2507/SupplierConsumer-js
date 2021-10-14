@@ -11,7 +11,7 @@ const chaincodeName = 'product';
 // (TRYING)
 const chaincodeNameIngredient = 'ingredient'
 const mspOrg2 = 'Org2MSP';
-const walletPath = path.join(__dirname, 'wallet');
+const walletPath = path.join(__dirname, 'wallet2');
 const org2UserId = 'org2User';
 
 const express = require("express")

@@ -47,14 +47,13 @@ router.get("/create", async function (req, res){
 
 			// CREATE INGREDIENT
 			try {
-				if (!(await contract.submitTransaction("IngredientExists", id))) {
-					//await contract.submitTransaction('InitLedger');
-					await contract.submitTransaction("CreateIngredient", id, name, type, issuer);
-					res.send("Create Ingredient Sucessfully");
-				} else {
-					res.send("Ingredient has already added to the world state")
-				}
-
+				//const exists = await contract.submitTransaction("IngredientExists", id);
+				//res.send(exists)
+				// if (exists==true) {
+				// 	res.send("Ingredient has already added to the world state")	
+				// }		
+				await contract.submitTransaction("CreateIngredient", id, name, type, issuer);
+				res.send("Create Ingredient Sucessfully");
 			} catch (createError) {
 				res.send("Caught the error: \n ${createError}");
 			}
@@ -160,7 +159,7 @@ router.get("/delete", async function(req, res){
 			const contract = network.getContract(chaincodeName);
 		
 			// DELETE INGREDIENT
-			await contract.evaluateTransaction('DeleteIngredient',id);
+			await contract.submitTransaction('DeleteIngredient',id);
 			res.send("Delete Successfully");
 
 		} finally {
