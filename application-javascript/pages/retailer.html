@@ -6,16 +6,21 @@
 </head>
 <body>
   <h1>This is Retailer Homepage</h1>
+
   <h3>View all Order in Request for Shipping</h3>
-  <a href="order/getRequest">View Data</a>
+  <a href="retailer/action/order/getRequest">View Data</a>
+
   <h3>View all Order in Shipping</h3>
-  <a href="order/getShipping">View Data</a>
+  <a href="retailer/action/order/getShipping">View Data</a>
+
   <h3>View all Successful Shipping Order</h3>
-  <a href="order/getShipped">View Data</a>
+  <a href="retailer/action/order/getShipped">View Data</a>
+
   <h3>View All Products for Purchase</h3>
-  <a href="product/getAll">View Data</a>
-  <h3>Confirm Order Received</h3>
-  <form action="order/update" method="get">
+  <a href="retailer/action/product/getAll">View Data</a>
+
+  <h3>Create new Order for Delivery Request</h3>
+  <form action="retailer/action/order/create" method="get">
     ID:
     <input name="id" type="text" required>
     Name:
@@ -25,14 +30,21 @@
     Products contained:
     <input name="contain" type="text" required>
     Issuer:
-    <input name="issuer" required value="Org2" required>
+    <input name="issuer" required value="Retailer" required>
     Owner:
-    <input name="powner" required value="Org4" required>
+    <input name="owner" required value="Org2" required>
     Shipping status:
-    <input name="status" required value="Shipped" required>
+    <input name="status" required value="Requested" required>
     Transfer to:
     <input name="transferto" required value="Retailer" required>
     <input type="submit" value="Create Order">
+  </form>
+
+  <h3>Confirm Order Received</h3>
+  <form action="retailer/action/order/received" method="get">
+    ID:
+    <input name="id" type="text" required>
+    <input type="submit" value="Submit">
   </form>
   
 </body>
