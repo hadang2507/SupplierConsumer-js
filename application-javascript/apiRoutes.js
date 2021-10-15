@@ -8,7 +8,7 @@ const retailer = require("./retailer.js")
 
 router.use('/farmer/action', farmer)
 router.use('/supplier/action', supplier)
-router.use('/retailer/action', retailer)
+//router.use('/retailer/action', retailer)
 
 router.get('/', (req, res) => {
   res.sendFile('index.html', {
