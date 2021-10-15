@@ -25,9 +25,9 @@ router.get("/product/create", async function (req, res){
 		const id = req.query.iid;
 		const name = req.query.iname;
 		const type = req.query.itype;
-    const madeOf = req.query.imadeof;
+    	const madeOf = req.query.imadeof;
 		const issuer = req.query.iissuer;
-    const owner = req.query.iowner;
+    	const owner = req.query.iowner;
 
 		const ccp = buildCCPOrg2();
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
@@ -160,15 +160,10 @@ router.get("/product/getAll", async function (req, res){
 router.get("/ingredient/getAll", async function (req, res){
 	try {
 		const ccp = buildCCPOrg2();
-
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-
 		const wallet = await buildWallet(Wallets, walletPath);
-
 		await enrollAdmin(caClient, wallet, mspOrg2);
-
 		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
-
 		const gateway = new Gateway();
 
 		try {
@@ -180,8 +175,8 @@ router.get("/ingredient/getAll", async function (req, res){
 			});
 
 			const network = await gateway.getNetwork('mychannel1');
-
 			const contract = network.getContract('ingredient');
+		
 			//Function to get all ingredients
 			console.log('\n--> Evaluate Transaction: GetAllIngredients, function returns all the current ingredients on the ledger');
 			let result = await contract.evaluateTransaction('GetAllIngredients');
@@ -232,19 +227,13 @@ router.get("/product/delete", async function(req, res){
 router.get("/order/getShipping", async function(req, res){
   try {
 		const ccp = buildCCPOrg2();
-
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-
 		const wallet = await buildWallet(Wallets, walletPath);
-
 		await enrollAdmin(caClient, wallet, mspOrg2);
-
 		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
-
 		const gateway = new Gateway();
 
 		try {
-
 			await gateway.connect(ccp, {
 				wallet,
 				identity: org2UserId,
@@ -252,10 +241,10 @@ router.get("/order/getShipping", async function(req, res){
 			});
 
 			const network = await gateway.getNetwork(channelName);
-
 			const contract = network.getContract('order');
+
 			//Function to get Orders in Shipping
-      //await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
+      		//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Shipping');
 			res.send(prettyJSONString(result.toString()));
 
@@ -269,19 +258,13 @@ router.get("/order/getShipping", async function(req, res){
 router.get("/order/getRequested", async function(req, res){
   try {
 		const ccp = buildCCPOrg2();
-
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-
 		const wallet = await buildWallet(Wallets, walletPath);
-
 		await enrollAdmin(caClient, wallet, mspOrg2);
-
 		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
-
 		const gateway = new Gateway();
 
 		try {
-
 			await gateway.connect(ccp, {
 				wallet,
 				identity: org2UserId,
@@ -289,10 +272,10 @@ router.get("/order/getRequested", async function(req, res){
 			});
 
 			const network = await gateway.getNetwork(channelName);
-
 			const contract = network.getContract('order');
+
 			//Function to get Orders in Shipping
-      //await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
+      		//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Requested');
 			res.send(prettyJSONString(result.toString()));
 
@@ -306,19 +289,13 @@ router.get("/order/getRequested", async function(req, res){
 router.get("/order/getShipped", async function(req, res){
   try {
 		const ccp = buildCCPOrg2();
-
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-
 		const wallet = await buildWallet(Wallets, walletPath);
-
 		await enrollAdmin(caClient, wallet, mspOrg2);
-
 		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
-
 		const gateway = new Gateway();
 
 		try {
-
 			await gateway.connect(ccp, {
 				wallet,
 				identity: org2UserId,
@@ -326,10 +303,10 @@ router.get("/order/getShipped", async function(req, res){
 			});
 
 			const network = await gateway.getNetwork(channelName);
-
 			const contract = network.getContract('order');
+
 			//Function to get Orders in Shipping
-      //await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
+      		//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Shipped');
 			res.send(prettyJSONString(result.toString()));
 
