@@ -5,12 +5,16 @@ const farmer = require("./farmer.js")
 const supplier = require("./supplier.js")
 const retailer = require("./retailer.js")
 const shipper = require("./shipper.js")
+const registration = require("./registration.js")
+const login = require("./login.js")
 // api route
 
 router.use('/farmer/action', farmer)
 router.use('/supplier/action', supplier)
 router.use('/retailer/action', retailer)
 router.use('/shipper/action', shipper)
+router.use('/registration', registration)
+router.use('/login', login)
 
 router.get('/', (req, res) => {
   res.sendFile('index.html', {
@@ -18,7 +22,12 @@ router.get('/', (req, res) => {
   })
   console.log("Homepage") 
 })
-
+router.get('/new_index', (req, res) => {
+  res.sendFile('new_index.html', {
+      root: path.join(__dirname, './pages')
+  })
+  console.log("Homepage") 
+})
 router.get('/farmer',(req, res)=>{
   res.sendFile('farmer.html',{
     root: path.join(__dirname, './pages')
@@ -49,27 +58,47 @@ router.get('/retailer',(req, res)=>{
 })
 
 
-// router.get('/login-famer', (req, res)=>{
-//   res.sendFile('FarmerLogin.html',{
-//     root: path.join(__dirname, '../pages')
-//   })
-// })
-// router.get('/login-supplier', (req, res)=>{
-//   res.sendFile('SupplierLogin.html',{
-//     root: path.join(__dirname, '../pages')
-//   })
-// })
-// router.get('/login-deliver', (req, res)=>{
-//   res.sendFile('DeliverLogin.html',{
-//     root: path.join(__dirname, '../pages')
-//   })
-// })
+router.get('/login-farmer', (req, res)=>{
+  res.sendFile('FarmerLogin.html',{
+    root: path.join(__dirname, './pages')
+  })
+})
+router.get('/login-supplier', (req, res)=>{
+  res.sendFile('SupplierLogin.html',{
+    root: path.join(__dirname, './pages')
+  })
+})
+router.get('/login-deliver', (req, res)=>{
+  res.sendFile('DeliverLogin.html',{
+    root: path.join(__dirname, './pages')
+  })
+})
+router.get('/login-retailer', (req, res)=>{
+  res.sendFile('RetailerLogin.html',{
+    root: path.join(__dirname, './pages')
+  })
+})
 
-// router.get('/login-retailer', (req, res)=>{
-//   res.sendFile('RetailerLogin.html',{
-//     root: path.join(__dirname, '../pages')
-//   })
-// })
+router.get('/register-farmer', (req, res)=>{
+  res.sendFile('FarmerRegistration.html',{
+    root: path.join(__dirname, './pages')
+  })
+})
+router.get('/register-supplier', (req, res)=>{
+  res.sendFile('SupplierRegistration.html',{
+    root: path.join(__dirname, './pages')
+  })
+})
+router.get('/register-deliver', (req, res)=>{
+  res.sendFile('DeliverRegistration.html',{
+    root: path.join(__dirname, './pages')
+  })
+})
+router.get('/register-retailer', (req, res)=>{
+  res.sendFile('RetailerRegistration.html',{
+    root: path.join(__dirname, './pages')
+  })
+})
 
 // router.post('/auth-farmer', (req, res) => {
 //   // Insert Login Code Here
