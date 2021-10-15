@@ -3,12 +3,14 @@ const router = express.Router()
 const path = require('path');
 const farmer = require("./farmer.js")
 const supplier = require("./supplier.js")
-//const retailer = require("./retailer.js")
+const retailer = require("./retailer.js")
+const shipper = require("./shipper.js")
 // api route
 
 router.use('/farmer/action', farmer)
 router.use('/supplier/action', supplier)
-//router.use('/retailer/action', retailer)
+router.use('/retailer/action', retailer)
+router.use('/shipper/action', shipper)
 
 router.get('/', (req, res) => {
   res.sendFile('index.html', {
