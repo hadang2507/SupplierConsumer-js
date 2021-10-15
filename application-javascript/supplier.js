@@ -21,13 +21,58 @@ function prettyJSONString(inputString) {
 }
 
 router.get("/product/create", async function (req, res){
+	//Check if Ingredient exists
 	try {
-		const id = req.query.iid;
-		const name = req.query.iname;
-		const type = req.query.itype;
-    	const madeOf = req.query.imadeof;
-		const issuer = req.query.iissuer;
-    	const owner = req.query.iowner;
+		const id = req.query.pid
+    const madeOf = req.query.pmadeof;
+		const str = madeOf.toString();
+		const madeOfStr = str.split(",");		
+
+		const ccp = buildCCPOrg2();
+		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		const wallet = await buildWallet(Wallets, walletPath);
+		await enrollAdmin(caClient, wallet, mspOrg2);
+		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: org2UserId,
+				discovery: { enabled: true, asLocalhost: true } 
+			});
+			const network = await gateway.getNetwork('mychannel1');
+			const contract = network.getContract('ingredient');
+
+			// CREATE PRODUCT
+			try {
+				for(const value of madeOfStr){
+					let result = await contract.evaluateTransaction('IngredientExists', value);
+					if(result == 'false'){
+						// console.log(result);
+						// console.log(value)
+						res.send('Ingredient to make Product ' + id + ' does not exist');
+						return;
+					}
+				}
+			} catch (createError) {
+				res.send("Caught the error" + createError);
+			}
+		} finally {
+			gateway.disconnect();
+		}
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+
+	//CREATE PRODUCT AFTER CHECKING INGREDIENT
+	try {
+		const id = req.query.pid;
+		const name = req.query.pname;
+		const type = req.query.ptype;
+    const madeOf = req.query.pmadeof;
+		const issuer = req.query.pissuer;
+    const owner = req.query.powner;
 
 		const ccp = buildCCPOrg2();
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
@@ -47,27 +92,14 @@ router.get("/product/create", async function (req, res){
 
 			// CREATE PRODUCT
 			try {
-				if (!(await contract.submitTransaction("ProductExist", id))) {
 					//Function for Org2 to add new Product
-					console.log('\n--> Submit Transaction: CreateProduct, creates new asset with id, Name, Type, madeOf, Issuer, Owner arguments');
-					result = await contract.submitTransaction('CreateProduct', id, name, type, madeOf, issuer, owner);
-					console.log('*** Result: committed');
-				} else {
-					res.send("Product has already added to the world state")
-				}
-
-				if (`${result}` !== '') {
-					console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-				}
+					//console.log('\n--> Submit Transaction: CreateProduct, creates new asset with id, Name, Type, madeOf, Issuer, Owner arguments');
+					//console.log(madeOf)
+					await contract.submitTransaction('CreateProduct', id, name, type, madeOf, issuer, owner);
+					res.send("Product " + id + " added succesfully");
 			} catch (createError) {
-				res.send("Caught the error: \n ${createError}");
+				res.send("Caught the error" + createError);
 			}
-
-			//Function to check
-			console.log('\n--> Evaluate Transaction: GetAllProducts, function returns all the current products on the ledger');
-			let result = await contract.evaluateTransaction('GetAllProducts');
-			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-
 		} finally {
 			gateway.disconnect();
 		}
@@ -78,12 +110,10 @@ router.get("/product/create", async function (req, res){
 
 router.get("/product/update", async function (req, res){
 	try {
-		const id = req.query.iid;
-		const name = req.query.iname;
-		const type = req.query.itype;
-		const madeof = req.query.imadeof;
-		const issuer = req.query.iissuer;
-		const owner = req.query.iowner;
+		const id = req.query.pid;
+		const name = req.query.pname;
+		const madeof = req.query.pmadeof;
+		
 
 		const ccp = buildCCPOrg2();
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
@@ -104,20 +134,12 @@ router.get("/product/update", async function (req, res){
 
 			// UPDATE PRODUCT
 			try {
-				console.log('\n--> Submit Transaction: UpdateProduct, update a product with id, Name, Type, madeOf, Issuer, Owner arguments');
-				result = await contract.submitTransaction('UpdateProduct', id, name, type, madeof, issuer, owner);
-				console.log('*** Result: committed');
-				if (`${result}` !== '') {
-					console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-				}
+				await contract.submitTransaction('UpdateProduct', id, name, "product", madeof, "Org2", "Org2");
+				res.send("Update Product " + id + " successfully")
+
 			} catch (updateError) {
-				res.send("Caught the error: \n ${updateError}");
+				res.send("Caught the error " + updateError);
 			}
-
-            console.log('\n--> Evaluate Transaction: GetAllProducts, function returns all the current products on the ledger');
-			let result = await contract.evaluateTransaction('GetAllProducts');
-			console.log(`*** Result: ${prettyJSONString(result.toString())}`);
-
 		} finally {
 			gateway.disconnect();
 		}
