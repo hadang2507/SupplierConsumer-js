@@ -7,52 +7,28 @@
 <body>
   <h1>This is Deliver Homepage</h1>
   <h3>Accept Shipping Request Order</h3>
-  <form action="order/update" method="get">
+  <form action="shipper/action/order/acceptShipment" method="get">
     ID:
     <input name="id" type="text" required>
-    Name:
-    <input name="name" type="text" required>
-    Type:
-    <input name="type" type="text">
-    Products contained:
-    <input name="contain" type="text" required>
-    Issuer:
-    <input name="issuer" required value="Org2" required>
-    Owner:
-    <input name="powner" required value="Org4" required>
-    Shipping status:
-    <input name="status" required value="Shipping" required>
-    Transfer to:
-    <input name="transferto" required value="Retailer" required>
-    <input type="submit" value="Create Order">
+    <input type="submit" value="Accept Order">
   </form>
   <h3>View Order in Request for Shipping</h3>
-  <a href="order/getRequest">View Data</a>
+  <a href="shipper/action/order/getRequest">View Data</a>
   <h3>View Order in Shipping</h3>
-  <a href="order/getShipping">View Data</a>
+  <a href="shipper/action/order/getShipping">View Data</a>
   <h3>View Order Succesfully</h3>
-  <a href="order/getShipped">View Data</a>
+  <a href="shipper/action/order/getShipped">View Data</a>
   <h3>View All Order</h3>
-  <a href="order/getAll">View Data</a>
-  <h3>Accept Request for Shipping Order</h3>
-  <form action="order/update" method="get">
+  <a href="shipper/action/order/getAll">View Data</a>
+  
+  <h3>Changing Request for Shipping Order</h3>
+  <form action="shipper/action/order/changeShipmentStatus" method="get">
     ID:
     <input name="id" type="text" required>
-    Name:
-    <input name="name" type="text" required>
-    Type:
-    <input name="type" type="text">
-    Products contained:
-    <input name="contain" type="text" required>
-    Issuer:
-    <input name="issuer" required value="Org2" required>
-    Owner:
-    <input name="owner" required value="Org4" required>
+    
     Shipping status:
     <input name="status" required value="Shipping" required>
-    Transfer to:
-    <input name="transferto" required value="Retailer" required>
-    <input type="submit" value="Create Order">
+    <input type="submit" value="Update Status">
   </form>
 </body>
 </html>
