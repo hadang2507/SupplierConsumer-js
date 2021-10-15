@@ -14,7 +14,7 @@ const channelName = 'mychannel2';
 const chaincodeName = 'order';
 const mspOrg4 = 'Org4MSP';
 const walletPath = path.join(__dirname, 'wallet4');
-const org4UserId = 'org4User1';
+const org4UserId = 'org4User5';
 
 function prettyJSONString(inputString) {
 	return JSON.stringify(JSON.parse(inputString), null, 2);
@@ -117,4 +117,100 @@ router.get("/order/changeShipmentStatus", async function (req, res){
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
+
+router.get("/order/getShipping", async function(req, res){
+	try {
+		  const ccp = buildCCPOrg4();
+		  const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org4.example.com');
+		  const wallet = await buildWallet(Wallets, walletPath);
+		  await enrollAdmin(caClient, wallet, mspOrg4);
+		  await registerAndEnrollUser(caClient, wallet, mspOrg4, org4UserId, 'org4.department1');
+		  const gateway = new Gateway();
+  
+		  try {
+			  await gateway.connect(ccp, {
+				  wallet,
+				  identity: org4UserId,
+				  discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+			  });
+  
+			  const network = await gateway.getNetwork(channelName);
+			  const contract = network.getContract('order');
+  
+			  //Function to get Orders in Shipping
+				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
+			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Shipping');
+			  res.send(prettyJSONString(result.toString()));
+  
+		  } finally {
+			  gateway.disconnect();
+		  }
+	  } catch (error) {
+		  console.error(`******** FAILED to run the application: ${error}`);
+	  }
+  })
+  router.get("/order/getRequested", async function(req, res){
+	try {
+		  const ccp = buildCCPOrg4();
+		  const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org4.example.com');
+		  const wallet = await buildWallet(Wallets, walletPath);
+		  await enrollAdmin(caClient, wallet, mspOrg4);
+		  await registerAndEnrollUser(caClient, wallet, mspOrg4, org4UserId, 'org4.department1');
+		  const gateway = new Gateway();
+  
+		  try {
+			  await gateway.connect(ccp, {
+				  wallet,
+				  identity: org4UserId,
+				  discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+			  });
+  
+			  const network = await gateway.getNetwork(channelName);
+			  const contract = network.getContract('order');
+  
+			  //Function to get Orders in Shipping
+				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
+			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Requested');
+			  res.send(prettyJSONString(result.toString()));
+  
+		  } finally {
+			  gateway.disconnect();
+		  }
+	  } catch (error) {
+		  console.error(`******** FAILED to run the application: ${error}`);
+	  }
+  })
+  router.get("/order/getShipped", async function(req, res){
+	try {
+		  const ccp = buildCCPOrg4();
+		  const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org4.example.com');
+		  const wallet = await buildWallet(Wallets, walletPath);
+		  await enrollAdmin(caClient, wallet, mspOrg4);
+		  await registerAndEnrollUser(caClient, wallet, mspOrg4, org4UserId, 'org4.department1');
+		  const gateway = new Gateway();
+  
+		  try {
+			  await gateway.connect(ccp, {
+				  wallet,
+				  identity: org4UserId,
+				  discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+			  });
+  
+			  const network = await gateway.getNetwork(channelName);
+			  const contract = network.getContract('order');
+  
+			  //Function to get Orders in Shipping
+				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
+			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Shipped');
+			  res.send(prettyJSONString(result.toString()));
+  
+		  } finally {
+			  gateway.disconnect();
+		  }
+	  } catch (error) {
+		  console.error(`******** FAILED to run the application: ${error}`);
+	  }
+  })
+  
+  
 module.exports=router;
