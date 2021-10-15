@@ -3,7 +3,7 @@ const router = express.Router()
 const path = require('path');
 const farmer = require("./farmer.js")
 const supplier = require("./supplier.js")
-const retailer = require("./retailer.js")
+//const retailer = require("./retailer.js")
 // api route
 
 router.use('/farmer/action', farmer)
