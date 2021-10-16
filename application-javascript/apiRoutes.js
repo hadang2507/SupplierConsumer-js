@@ -28,6 +28,12 @@ router.get('/', (req, res) => {
 //   })
 //   console.log("Homepage") 
 // })
+
+router.get('/logout',(req,res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
+
 router.get('/farmer',(req, res)=>{
   var session=req.session;
     if(session.userid == 'farmer'){
