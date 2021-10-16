@@ -3,15 +3,16 @@
 const { Gateway, Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const path = require('path');
-const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../test-application/javascript/CAUtil.js');
+// const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../test-application/javascript/CAUtil.js');
 const { buildCCPOrg2, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 
 const channelName = 'mychannel2';
 const chaincodeName = 'product';
+const walletPath2 = path.join(__dirname, 'wallet2');
 
-const mspOrg2 = 'Org2MSP';
-const walletPath = path.join(__dirname, 'wallet2');
-const org2UserId = 'org2User';
+// const mspOrg2 = 'Org2MSP';
+// const walletPath = path.join(__dirname, 'wallet2');
+// const org2UserId = 'org2User';
 
 const express = require("express")
 const router = express.Router()
@@ -28,19 +29,23 @@ router.get("/product/create", async function (req, res){
 		const str = madeOf.toString();
 		const madeOfStr = str.split(",");		
 
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
-				discovery: { enabled: true, asLocalhost: true } 
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
 			});
+
 			const network = await gateway.getNetwork('mychannel1');
 			const contract = network.getContract('ingredient');
 
@@ -74,18 +79,20 @@ router.get("/product/create", async function (req, res){
 		const issuer = req.query.pissuer;
     const owner = req.query.powner;
 
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
-				discovery: { enabled: true, asLocalhost: true } 
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
 			});
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract(chaincodeName);
@@ -115,18 +122,21 @@ router.get("/product/update", async function (req, res){
 		const madeof = req.query.pmadeof;
 		
 
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
-				discovery: { enabled: true, asLocalhost: true } 
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
 			});
 
 			const network = await gateway.getNetwork(channelName);
@@ -150,20 +160,23 @@ router.get("/product/update", async function (req, res){
 
 router.get("/product/getAll", async function (req, res){
 	try {
+
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
-				discovery: { enabled: true, asLocalhost: true } 
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
 			});
-
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract(chaincodeName);
 
@@ -181,19 +194,22 @@ router.get("/product/getAll", async function (req, res){
 
 router.get("/ingredient/getAll", async function (req, res){
 	try {
+		
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
-
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
-				discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
 			});
 
 			const network = await gateway.getNetwork('mychannel1');
@@ -216,17 +232,20 @@ router.get("/product/delete", async function(req, res){
 	try {
 		const id = req.query.iid
 
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
+				identity: 'admin',
 				discovery: { enabled: true, asLocalhost: true }
 			});
 
@@ -248,20 +267,22 @@ router.get("/product/delete", async function(req, res){
 
 router.get("/order/getShipping", async function(req, res){
   try {
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
-				discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
 			});
-
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract('order');
 
@@ -279,20 +300,22 @@ router.get("/order/getShipping", async function(req, res){
 })
 router.get("/order/getRequested", async function(req, res){
   try {
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
-				discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
 			});
-
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract('order');
 
@@ -310,18 +333,20 @@ router.get("/order/getRequested", async function(req, res){
 })
 router.get("/order/getShipped", async function(req, res){
   try {
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
 		const ccp = buildCCPOrg2();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg2);
-		await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org2UserId,
-				discovery: { enabled: true, asLocalhost: true } // using asLocalhost as this gateway is using a fabric network deployed locally
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
 			});
 
 			const network = await gateway.getNetwork(channelName);

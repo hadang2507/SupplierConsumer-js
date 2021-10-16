@@ -7,14 +7,16 @@ const router = express.Router()
 const { Gateway, Wallets } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const path = require('path');
-const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../test-application/javascript/CAUtil.js');
+// const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../test-application/javascript/CAUtil.js');
 const { buildCCPOrg1, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 
 const channelName = 'mychannel1';
 const chaincodeName = 'ingredient';
-const mspOrg1 = 'Org1MSP';
-const walletPath = path.join(__dirname, 'wallet');
-const org1UserId = 'org1User';
+const walletPath1 = path.join(__dirname, 'wallet1');
+
+// const mspOrg1 = 'Org1MSP';
+// const walletPath = path.join(__dirname, 'wallet1');
+// const org1UserId = 'org1User';
 
 function prettyJSONString(inputString) {
 	return JSON.stringify(JSON.parse(inputString), null, 2);
@@ -28,17 +30,18 @@ router.get("/ingredient/create", async function (req, res){
 		const type = req.query.itype;
 		const issuer = req.query.iissuer;
 
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg1);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
 		const ccp = buildCCPOrg1();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg1);
-		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath1);
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org1UserId,
+				identity: 'admin',
 				discovery: { enabled: true, asLocalhost: true }
 			});
 
@@ -72,17 +75,19 @@ router.get("/ingredient/update", async function (req, res){
 		const name = req.query.iname;
 		const type = req.query.itype;
 		
+		// const ccp = buildCCPOrg1();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg1);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
 		const ccp = buildCCPOrg1();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg1);
-		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath1);
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org1UserId,
+				identity: 'admin',
 				discovery: { enabled: true, asLocalhost: true }
 			});
 
@@ -107,17 +112,20 @@ router.get("/ingredient/update", async function (req, res){
 
 router.get("/ingredient/getAll", async function (req, res){
   try {
+
 		const ccp = buildCCPOrg1();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg1);
-		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg1);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+
+		const wallet =  await Wallets.newFileSystemWallet( walletPath1);
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org1UserId,
+				identity: 'admin',
 				discovery: { enabled: true, asLocalhost: true }
 			});
 
@@ -141,19 +149,23 @@ router.get("/ingredient/delete", async function(req, res){
 
 		const id = req.query.iid
 
+		// const ccp = buildCCPOrg1();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg1);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+
 		const ccp = buildCCPOrg1();
-		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org1.example.com');
-		const wallet = await buildWallet(Wallets, walletPath);
-		await enrollAdmin(caClient, wallet, mspOrg1);
-		await registerAndEnrollUser(caClient, wallet, mspOrg1, org1UserId, 'org1.department1');
+		const wallet =  await Wallets.newFileSystemWallet( walletPath1);
 		const gateway = new Gateway();
 
 		try {
 			await gateway.connect(ccp, {
 				wallet,
-				identity: org1UserId,
+				identity: 'admin',
 				discovery: { enabled: true, asLocalhost: true }
 			});
+
 
 			const network = await gateway.getNetwork(channelName);
 			const contract = network.getContract(chaincodeName);

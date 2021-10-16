@@ -39,24 +39,12 @@
     <input name="transferto" required value="Retailer" required>
     <input type="submit" value="Create Order">
   </form>
-  <form action="retailer/action/order/getIngredientinProduct" method="get">
+
+  <h3>Get List of Ingredient by Product ID</h3>
+  <form action="supplier/action/order/getIngredientinProduct" method="get">
     ID:
     <input name="id" type="text" required>
-    Name:
-    <input name="name" type="text" required>
-    Type:
-    <input name="type" type="text">
-    Products contained:
-    <input name="contain" type="text" required>
-    Issuer:
-    <input name="issuer" required value="Retailer" required>
-    Owner:
-    <input name="owner" required value="Org2" required>
-    Shipping status:
-    <input name="status" required value="Requested" required>
-    Transfer to:
-    <input name="transferto" required value="Retailer" required>
-    <input type="submit" value="Create Order">
+    <input type="submit" value="Retrieve Ingredient">
   </form>
 </body>
 </html>

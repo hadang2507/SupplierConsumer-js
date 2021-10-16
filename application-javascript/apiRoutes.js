@@ -4,7 +4,7 @@ const path = require('path');
 const farmer = require("./farmer.js")
 const supplier = require("./supplier.js")
 const retailer = require("./retailer.js")
-const shipper = require("./shipper.js")
+const deliver = require("./deliver.js")
 const registration = require("./registration.js")
 const login = require("./login.js")
 // api route
@@ -12,48 +12,68 @@ const login = require("./login.js")
 router.use('/farmer/action', farmer)
 router.use('/supplier/action', supplier)
 router.use('/retailer/action', retailer)
-router.use('/shipper/action', shipper)
+router.use('/shipper/action', deliver)
 router.use('/registration', registration)
 router.use('/login', login)
 
 router.get('/', (req, res) => {
-  res.sendFile('index.html', {
-      root: path.join(__dirname, './pages')
-  })
-  console.log("Homepage") 
-})
-router.get('/new_index', (req, res) => {
   res.sendFile('new_index.html', {
       root: path.join(__dirname, './pages')
   })
   console.log("Homepage") 
 })
+// router.get('/new_index', (req, res) => {
+//   res.sendFile('new_index.html', {
+//       root: path.join(__dirname, './pages')
+//   })
+//   console.log("Homepage") 
+// })
 router.get('/farmer',(req, res)=>{
-  res.sendFile('farmer.html',{
-    root: path.join(__dirname, './pages')
-  })
+  var session=req.session;
+    if(session.userid == 'farmer'){
+      res.sendFile('farmer.html',{
+        root: path.join(__dirname, './pages')
+      })
+    }else{
+      res.redirect("/login-farmer")
+    }
   console.log("Farmer Page")
 })
 
 
 router.get('/supplier',(req, res)=>{
-  res.sendFile('supplier.html',{
-    root: path.join(__dirname, './pages')
-  })
-  console.log("Supplier Page")
+  var session=req.session;
+    if(session.userid == 'supplier'){
+      res.sendFile('supplier.html',{
+        root: path.join(__dirname, './pages')
+      })
+    }else{
+      res.redirect("/login-supplier")
+    }
+  console.log("Supplier Page");
 })
 
 router.get('/deliver',(req, res)=>{
-  res.sendFile('deliver.html',{
-    root: path.join(__dirname, './pages')
-  })
+  var session=req.session;
+    if(session.userid == 'deliver'){
+      res.sendFile('deliver.html',{
+        root: path.join(__dirname, './pages')
+      })
+    }else{
+      res.redirect("/login-deliver")
+    }
   console.log("Deliver Page")
 })
 
 router.get('/retailer',(req, res)=>{
-  res.sendFile('retailer.html',{
-    root: path.join(__dirname, './pages')
-  })
+  var session=req.session;
+    if(session.userid == 'retailer'){
+      res.sendFile('retailer.html',{
+        root: path.join(__dirname, './pages')
+      })
+    }else{
+      res.redirect("/login-retailer")
+    }
   console.log("Retailer Page")
 })
 
