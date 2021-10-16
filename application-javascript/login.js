@@ -2,6 +2,8 @@
 
 const express = require("express")
 const router = express.Router()
+const cookieParser = require('cookie-parser');
+
 
 
 const { Gateway, Wallets } = require('fabric-network');
@@ -21,68 +23,92 @@ const walletPath3 = path.join(__dirname, 'wallet3');
 const walletPath2 = path.join(__dirname, 'wallet2');
 const walletPath1 = path.join(__dirname, 'wallet1');
 
-router.get("/farmer", async function (req, res){
+router.post("/farmer", async function (req, res){
 	try {
-        const username = req.query.fusername;
-        const password = req.query.fpassword;
+        var session;
+
+        const username = req.body.fusername;
+        const password = req.body.fpassword;
         const name = username+password;
 		const wallet =  await Wallets.newFileSystemWallet( walletPath1);
         const userExists = await wallet.get(name);
         if (userExists) {
+            // create session
+            session=req.session;
+            session.userid='farmer';
+            //res.cookie('session', name, { expires: new Date(Date.now() + 9000000000000000)})
             res.redirect("/farmer")
         return;
         }
-        res.send("Unknown Identity"); 
+        res.redirect('/register-farmer')
     }catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
-router.get("/supplier", async function (req, res){
+router.post("/supplier", async function (req, res){
 	try {
-        const username = req.query.susername;
-        const password = req.query.spassword;
+        var session;
+
+        const username = req.body.susername;
+        const password = req.body.spassword;
         const name = username+password;
 		const wallet =  await Wallets.newFileSystemWallet( walletPath2);
 		const userExists = await wallet.get(name);
         if (userExists) {
+            // create session
+            session=req.session;
+            session.userid='supplier';
+            //res.cookie('session', name, { expires: new Date(Date.now() + 9000000000000000)})
             res.redirect("/supplier")
         return;
         }
-        res.send("Unknown Identity");
+        res.redirect('/register-supplier')
     }catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
-router.get("/retailer", async function (req, res){
+router.post("/retailer", async function (req, res){
 	try {
-        const username = req.query.rusername;
-        const password = req.query.rpassword;
+        var session;
+        const username = req.body.rusername;
+        const password = req.body.rpassword;
         const name = username+password;
 		const wallet =  await Wallets.newFileSystemWallet(  walletPath3);
 		const userExists = await wallet.get(name);
         if (userExists) {
-            res.redirect("/supplier")
+            // create session
+            session=req.session;
+            session.userid='retailer';
+            //res.cookie('session', name, { expires: new Date(Date.now() + 9000000000000000)})
+            res.redirect("/retailer")
         return;
         }
-        res.send("Unknown Identity");
+        res.redirect('/register-retailer')
     }catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
-router.get("/shipper", async function (req, res){
+router.post("/deliver", async function (req, res){
 	try {
-        const username = req.query.dusername;
-        const password = req.query.dpassword;
+        var session;
+
+        const username = req.body.dusername;
+        const password = req.body.dpassword;
         const name = username+password;
 		const ccp = buildCCPOrg4();
 		const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org4.example.com');
 		const wallet =  await Wallets.newFileSystemWallet( walletPath4);
 		const userExists = await wallet.get(name);
+        console.log(name);
         if (userExists) {
-            res.redirect("/supplier")
+            // create session
+            session=req.session;
+            session.userid='deliver';
+            //res.cookie('session', name, { expires: new Date(Date.now() + 9000000000000000)})
+            res.redirect("/deliver")
         return;
         }
-        res.send("Unknown Identity");
+        res.redirect('/register-deliver')
     }catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
