@@ -7,7 +7,7 @@
 <body>
   <h1>This is Deliver Homepage</h1>
   <h3>Accept Shipping Request Order</h3>
-  <form action="shipper/action/order/acceptShipment" method="get">
+  <form action="shipper/action/order/acceptShipment" method="post">
     ID:
     <input name="id" type="text" required>
     <input type="submit" value="Accept Order">
@@ -21,8 +21,8 @@
   <h3>View All Order</h3>
   <a href="shipper/action/order/getAll">View Data</a>
   
-  <h3>Changing Request for Shipping Order</h3>
-  <form action="shipper/action/order/changeShipmentStatus" method="get">
+  <h3>Changing Status for Shipping Order</h3>
+  <form action="shipper/action/order/changeShipmentStatus" method="post">
     ID:
     <input name="id" type="text" required>
     

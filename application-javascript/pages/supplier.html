@@ -7,7 +7,7 @@
 <body>
   <h1>This is Supplier Homepage</h1>
   <h3>Add Products</h3>
-  <form action="supplier/action/product/create" method="get">
+  <form action="supplier/action/product/create" method="post">
     ID:
     <input name="pid" type="text" required>
     Name:
@@ -27,7 +27,7 @@
   <a href="supplier/action/product/getAll">Show data</a>
 
   <h3>Update Product</h3>
-  <form action="supplier/action/product/update" method="get">
+  <form action="supplier/action/product/update" method="post">
     ID:
     <input name="pid" type="text" required>
     New Name:
@@ -38,7 +38,7 @@
   </form>
 
   <h3>Delete Product</h3>
-  <form action="supplier/action/product/delete" method="get">
+  <form action="supplier/action/product/delete" method="post">
     ID of Product want to Delete:
     <input name="iid" type="text" required>
     <input type="submit" value="Delete">
@@ -55,7 +55,7 @@
 
   <h3>View Ingredient List</h3>
   <a href="supplier/action/ingredient/getAll">View Data</a>
-
+<br>
   <a href="/logout">Logout</a>
 <br>
 </body>

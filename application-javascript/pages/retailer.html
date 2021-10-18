@@ -20,7 +20,7 @@
   <a href="retailer/action/product/getAll">View Data</a>
 
   <h3>Create new Order for Delivery Request</h3>
-  <form action="retailer/action/order/create" method="get">
+  <form action="retailer/action/order/create" method="post">
     ID:
     <input name="id" type="text" required>
     Name:
@@ -41,12 +41,12 @@
   </form>
 
   <h3>Get List of Ingredient by Product ID</h3>
-  <form action="supplier/action/order/getIngredientinProduct" method="get">
+  <form action="retailer/action/order/getIngredientinProduct" method="post">
     ID:
     <input name="id" type="text" required>
     <input type="submit" value="Retrieve Ingredient">
   </form>
-
+  <br>
   <a href="/logout">Logout</a>
 <br>
 </body>

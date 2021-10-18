@@ -10,9 +10,12 @@ const path = require('path');
 // const { buildCAClient, registerAndEnrollUser, enrollAdmin } = require('../../test-application/javascript/CAUtil.js');
 const { buildCCPOrg3, buildWallet } = require('../../test-application/javascript/AppUtil.js');
 const walletPath3 = path.join(__dirname, 'wallet3');
+const { buildCCPOrg2 } = require('../../test-application/javascript/AppUtil.js');
+const walletPath2 = path.join(__dirname, 'wallet2');
 
 const channelName = 'mychannel2';
 const chaincodeName = 'order';
+var madeOfStr;
 // const mspOrg3 = 'Org3MSP';
 // const walletPath = path.join(__dirname, 'wallet3');
 // const org3UserId = 'org3User5';
@@ -48,7 +51,39 @@ router.get("/product/getAll", async function (req, res){
 
 			// GET ALL ORDERS
 			let result = await contract.evaluateTransaction('GetAllProducts');
-			res.send(prettyJSONString(result.toString()));
+			let resultStr = result.toString();
+			console.log(JSON.parse(resultStr));
+			resultStr = JSON.parse(resultStr);
+			//FROM JSON TO HTML TABLE
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "madeOf"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "Owner"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${madeOf}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${Owner}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(resultStr[0], template_table_header);
+			let table_body = json2html.transform(resultStr, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
 
 		} finally {
 			gateway.disconnect();
@@ -57,16 +92,16 @@ router.get("/product/getAll", async function (req, res){
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
 })
-router.get("/order/create", async function (req, res){
+router.post("/order/create", async function (req, res){
 	try {
-		const id = req.query.id;
-		const name = req.query.name;
-		const type = req.query.type;
-    const contain = req.query.contain;
-		const issuer = req.query.issuer;
-    const owner = req.query.owner;
-		const status = req.query.status;
-		const transferTo = req.query.transferto;
+		const id = req.body.id;
+		const name = req.body.name;
+		const type = req.body.type;
+    const contain = req.body.contain;
+		const issuer = req.body.issuer;
+    const owner = req.body.owner;
+		const status = req.body.status;
+		const transferTo = req.body.transferto;
 
 		// const ccp = buildCCPOrg3();
 		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org3.example.com');
@@ -165,7 +200,43 @@ router.get("/order/getShipping", async function(req, res){
 			  //Function to get Orders in Shipping
 				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Shipping');
-			  res.send(prettyJSONString(result.toString()));
+			  let resultStr = result.toString();
+			console.log(JSON.parse(resultStr));
+			resultStr = JSON.parse(resultStr);
+			//FROM JSON TO HTML TABLE
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "Contains"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "Owner"},
+						{"<>": "th", "html": "shippingStatus"},
+						{"<>": "th", "html": "transferTo"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${Contains}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${Owner}"},
+						{"<>": "td", "html": "${shippingStatus}"},
+						{"<>": "td", "html": "${transferTo}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(resultStr[0], template_table_header);
+			let table_body = json2html.transform(resultStr, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
   
 		  } finally {
 			  gateway.disconnect();
@@ -173,8 +244,8 @@ router.get("/order/getShipping", async function(req, res){
 	  } catch (error) {
 		  console.error(`******** FAILED to run the application: ${error}`);
 	  }
-  })
-  router.get("/order/getRequested", async function(req, res){
+})
+router.get("/order/getRequested", async function(req, res){
 	try {
 
 		  // const ccp = buildCCPOrg3();
@@ -200,7 +271,43 @@ router.get("/order/getShipping", async function(req, res){
 			  //Function to get Orders in Shipping
 				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Requested');
-			  res.send(prettyJSONString(result.toString()));
+			  let resultStr = result.toString();
+			console.log(JSON.parse(resultStr));
+			resultStr = JSON.parse(resultStr);
+			//FROM JSON TO HTML TABLE
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "Contains"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "Owner"},
+						{"<>": "th", "html": "shippingStatus"},
+						{"<>": "th", "html": "transferTo"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${Contains}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${Owner}"},
+						{"<>": "td", "html": "${shippingStatus}"},
+						{"<>": "td", "html": "${transferTo}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(resultStr[0], template_table_header);
+			let table_body = json2html.transform(resultStr, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
   
 		  } finally {
 			  gateway.disconnect();
@@ -208,8 +315,8 @@ router.get("/order/getShipping", async function(req, res){
 	  } catch (error) {
 		  console.error(`******** FAILED to run the application: ${error}`);
 	  }
-  })
-  router.get("/order/getShipped", async function(req, res){
+})
+router.get("/order/getShipped", async function(req, res){
 	try {
 
 		  // const ccp = buildCCPOrg3();
@@ -235,7 +342,43 @@ router.get("/order/getShipping", async function(req, res){
 			  //Function to get Orders in Shipping
 				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Shipped');
-			  res.send(prettyJSONString(result.toString()));
+			  let resultStr = result.toString();
+			console.log(JSON.parse(resultStr));
+			resultStr = JSON.parse(resultStr);
+			//FROM JSON TO HTML TABLE
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "Contains"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "Owner"},
+						{"<>": "th", "html": "shippingStatus"},
+						{"<>": "th", "html": "transferTo"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${Contains}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${Owner}"},
+						{"<>": "td", "html": "${shippingStatus}"},
+						{"<>": "td", "html": "${transferTo}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(resultStr[0], template_table_header);
+			let table_body = json2html.transform(resultStr, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
   
 		  } finally {
 			  gateway.disconnect();
@@ -243,5 +386,94 @@ router.get("/order/getShipping", async function(req, res){
 	  } catch (error) {
 		  console.error(`******** FAILED to run the application: ${error}`);
 	  }
-  })
+})
+router.post("/order/getIngredientinProduct",async function(req, res){
+	try {
+		const id = req.body.id;
+		// const ccp = buildCCPOrg3();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org3.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg3);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg3, org3UserId, 'org3.department1');
+
+		const ccp = buildCCPOrg2();
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2);
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
+			});
+
+
+			const network = await gateway.getNetwork(channelName);
+			const contract = network.getContract("product");
+
+			// GET Product from Product ID
+			let result = await contract.evaluateTransaction('ReadProduct', id);
+			let resultStr = result.toString();
+			//console.log(JSON.parse(resultStr).madeOf);
+			const str = JSON.parse(resultStr).madeOf.toString();
+			madeOfStr = str.split(",");
+			console.log(madeOfStr);
+		} finally {
+			gateway.disconnect();
+		}
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
+			});
+
+
+			const network = await gateway.getNetwork("mychannel1");
+			const contract = network.getContract("ingredient");
+			let str = "[";
+			for(const value of madeOfStr){
+				let result = await contract.evaluateTransaction('ReadIngredient', value);
+				str += result + ",";
+			}
+			str = str.substring(0, str.length - 1);
+			str += "]";
+			str = JSON.parse(str);
+			console.log(str);
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(str[0], template_table_header);
+			let table_body = json2html.transform(str, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
+
+		} finally {
+			gateway.disconnect();
+		}
+		
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}	
+})
+
 module.exports=router;

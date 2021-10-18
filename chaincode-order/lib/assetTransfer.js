@@ -156,7 +156,7 @@ class AssetTransfer extends Contract {
                 console.log(err);
                 record = strValue;
             }
-            allResults.push({ Key: result.value.key, Record: record });
+            allResults.push(record);
             result = await resultsIterator.next();
         }
         return JSON.stringify(allResults);
@@ -184,7 +184,7 @@ class AssetTransfer extends Contract {
                 console.log(err);
                 record = strValue;
             }
-            allResults.push({ Key: result.value.key, Record: record });
+            allResults.push(record);
             result = await iterator.next();
         }
         return JSON.stringify(allResults);
