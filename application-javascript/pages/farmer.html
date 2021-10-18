@@ -7,7 +7,7 @@
 <body>
   <h1>This is Farmer Homepage</h1>
   <h3>Add Ingredient</h3>
-  <form action="farmer/action/ingredient/create" method="get">
+  <form action="farmer/action/ingredient/create" method="post">
     ID:
     <input name="iid" type="text" required>
     Name:
@@ -21,7 +21,7 @@
   <h3>Go to list of Ingredients page</h3>
   <a href="farmer/action/ingredient/getAll">Show data</a>
   <h3>Update Ingredient</h3>
-  <form action="farmer/action/ingredient/update" method="get">
+  <form action="farmer/action/ingredient/update" method="post">
     ID:
     <input name="iid" type="text" required>
     New Name:
@@ -31,7 +31,7 @@
     <input type="submit" value="Update">
   </form>
   <h3>Delete Ingredient</h3>
-  <form action="farmer/action/ingredient/delete" method="get">
+  <form action="farmer/action/ingredient/delete" method="post">
     ID of Ingredient want to Delete:
     <input name="iid" type="text" required>
     <input type="submit" value="Delete">

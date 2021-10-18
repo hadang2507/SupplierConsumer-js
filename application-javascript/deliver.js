@@ -43,8 +43,44 @@ router.get("/order/getAll", async function (req, res){
 			const contract = network.getContract(chaincodeName);
 
 			// GET ALL ORDERS
-			let resul = await contract.evaluateTransaction('GetAllOrders');
-			res.send(prettyJSONString(resul.toString()));
+			let result = await contract.evaluateTransaction('GetAllOrders');
+			let resultStr = result.toString();
+			console.log(JSON.parse(resultStr));
+			resultStr = JSON.parse(resultStr);
+			//FROM JSON TO HTML TABLE
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "Contains"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "Owner"},
+						{"<>": "th", "html": "shippingStatus"},
+						{"<>": "th", "html": "transferTo"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${Contains}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${Owner}"},
+						{"<>": "td", "html": "${shippingStatus}"},
+						{"<>": "td", "html": "${transferTo}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(resultStr[0], template_table_header);
+			let table_body = json2html.transform(resultStr, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
 
 		} finally {
 			gateway.disconnect();
@@ -54,9 +90,9 @@ router.get("/order/getAll", async function (req, res){
 	}
 })
 
-router.get("/order/acceptShipment", async function (req, res){
+router.post("/order/acceptShipment", async function (req, res){
 	try {
-    const id = req.query.id;
+    const id = req.body.id;
 
 		// const ccp = buildCCPOrg4();
 		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org4.example.com');
@@ -92,10 +128,10 @@ router.get("/order/acceptShipment", async function (req, res){
 	}
 })
 
-router.get("/order/changeShipmentStatus", async function (req, res){
+router.post("/order/changeShipmentStatus", async function (req, res){
 	try {
-		const id = req.query.id;
-		const status = req.query.status;
+		const id = req.body.id;
+		const status = req.body.status;
 
 		// const ccp = buildCCPOrg4();
 		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org4.example.com');
@@ -152,7 +188,43 @@ router.get("/order/getShipping", async function(req, res){
 			  //Function to get Orders in Shipping
 				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Shipping');
-			  res.send(prettyJSONString(result.toString()));
+			 let resultStr = result.toString();
+			console.log(JSON.parse(resultStr));
+			resultStr = JSON.parse(resultStr);
+			//FROM JSON TO HTML TABLE
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "Contains"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "Owner"},
+						{"<>": "th", "html": "shippingStatus"},
+						{"<>": "th", "html": "transferTo"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${Contains}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${Owner}"},
+						{"<>": "td", "html": "${shippingStatus}"},
+						{"<>": "td", "html": "${transferTo}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(resultStr[0], template_table_header);
+			let table_body = json2html.transform(resultStr, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
   
 		  } finally {
 			  gateway.disconnect();
@@ -185,8 +257,43 @@ router.get("/order/getShipping", async function(req, res){
 			  //Function to get Orders in Shipping
 				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Requested');
-			  res.send(prettyJSONString(result.toString()));
-  
+			  let resultStr = result.toString();
+			console.log(JSON.parse(resultStr));
+			resultStr = JSON.parse(resultStr);
+			//FROM JSON TO HTML TABLE
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "Contains"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "Owner"},
+						{"<>": "th", "html": "shippingStatus"},
+						{"<>": "th", "html": "transferTo"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${Contains}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${Owner}"},
+						{"<>": "td", "html": "${shippingStatus}"},
+						{"<>": "td", "html": "${transferTo}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(resultStr[0], template_table_header);
+			let table_body = json2html.transform(resultStr, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
 		  } finally {
 			  gateway.disconnect();
 		  }
@@ -217,8 +324,44 @@ router.get("/order/getShipping", async function(req, res){
 			  //Function to get Orders in Shipping
 				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
 			  let result = await contract.evaluateTransaction('QueryOrdersByShippingStatus', 'Shipped');
-			  res.send(prettyJSONString(result.toString()));
-  
+			  let resultStr = result.toString();
+			console.log(JSON.parse(resultStr));
+			resultStr = JSON.parse(resultStr);
+			//FROM JSON TO HTML TABLE
+			let template_table_header = {
+				"<>": "tr", "html": [
+						{"<>": "th", "html": "ID"},
+						{"<>": "th", "html": "Name"},
+						{"<>": "th", "html": "Type"},
+						{"<>": "th", "html": "Contains"},
+						{"<>": "th", "html": "Issuer"},
+						{"<>": "th", "html": "Owner"},
+						{"<>": "th", "html": "shippingStatus"},
+						{"<>": "th", "html": "transferTo"},
+						{"<>": "th", "html": "docType"},
+				]
+			}
+			let template_table_body = {
+				"<>": "tr", "html": [
+						{"<>": "td", "html": "${ID}"},
+						{"<>": "td", "html": "${Name}"},
+						{"<>": "td", "html": "${Type}"},
+						{"<>": "td", "html": "${Contains}"},
+						{"<>": "td", "html": "${Issuer}"},
+						{"<>": "td", "html": "${Owner}"},
+						{"<>": "td", "html": "${shippingStatus}"},
+						{"<>": "td", "html": "${transferTo}"},
+						{"<>": "td", "html": "${docType}"},
+				]
+			}
+			let table_header = json2html.transform(resultStr[0], template_table_header);
+			let table_body = json2html.transform(resultStr, template_table_body);
+			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
+    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    	body = '<body>' + body + '</body>'
+    	let html = header + body + '</html>';
+			res.send(html);
+
 		  } finally {
 			  gateway.disconnect();
 		  }
