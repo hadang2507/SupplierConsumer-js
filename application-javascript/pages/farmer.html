@@ -2,42 +2,319 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Supply Chain</title>
-</head>
-<body>
-  <h1>This is Farmer Homepage</h1>
-  <h3>Add Ingredient</h3>
-  <form action="farmer/action/ingredient/create" method="post">
-    ID:
-    <input name="iid" type="text" required>
-    Name:
-    <input name="iname" type="text" required>
-    Type:
-    <input name="itype">
-    Issuer:
-    <input name="iissuer" required value="Org1">
-    <input type="submit" value="Add">
-  </form>
-  <h3>Go to list of Ingredients page</h3>
-  <a href="farmer/action/ingredient/getAll">Show data</a>
-  <h3>Update Ingredient</h3>
-  <form action="farmer/action/ingredient/update" method="post">
-    ID:
-    <input name="iid" type="text" required>
-    New Name:
-    <input name="iname" type="text" required>
-    New Type:
-    <input name="itype">
-    <input type="submit" value="Update">
-  </form>
-  <h3>Delete Ingredient</h3>
-  <form action="farmer/action/ingredient/delete" method="post">
-    ID of Ingredient want to Delete:
-    <input name="iid" type="text" required>
-    <input type="submit" value="Delete">
-  </form>
-  <br>
-  <a href="/logout">Logout</a>
+  <title>Farmer Homepage</title>
 
+  <style>
+    * { 
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .header {
+        height: 82px;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color:#F7FDE6;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    } 
+
+    #logout{
+      text-decoration: none;
+      background-color: #082D08;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 130px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			text-align: center;
+    }
+
+    #logout:hover{
+      background-color: #66BA54;
+			border-color: #EBF6CC;
+    }
+
+    body {
+			font-family: "Rosario";
+			margin-top: 89px;
+			text-align: center;
+			background-color: #efefef;
+      
+		}
+
+    h1 {
+        text-align: center;
+        margin-top: 153px;
+        margin-bottom: 88px;
+        font-weight: bolder;
+        font-size: 56px;
+        color: #082D08;
+    }
+
+    #homepage{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    #createoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 303px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #queryoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 161px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #updateoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 248px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #deleteoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 248px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    h3{
+      text-align: center;
+			font-weight: bolder;
+			font-size: 32px;
+			margin-bottom: 52px;
+			margin-top: 15px;
+			color: #082D08;
+    }
+
+    #input1{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+      margin-left: -50px;
+    }
+
+    #input2{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 30px;
+      margin-left: 50px;
+    }
+    
+    #input3, #input4{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    .detail{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #create{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    input[type=text]{
+			width: 250px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+		}
+
+    #issuer, #id{
+      width: 89px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+    }
+
+    #type{
+      width: 130px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+    }
+
+    p{
+      font-weight: bold;
+      color: #194819;
+    }
+
+    #show{
+      background-color: #082D08;
+      width: 130px;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 6px 40px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+    }
+
+    input[type=submit] {
+			background-color: #082D08;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 130px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+		}
+
+		#show:hover, input[type=submit]:hover {
+			background-color: #66BA54;
+			border-color: #EBF6CC;
+		}
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <img src="pantherlogo.png" alt="Panther logo" width="52px" style="margin: 0px 0px 0px 20px;">
+    <p> Supply Chain Project - Team Panther </p>
+    <a id="logout" href="/logout">Logout</a>
+  </div>
+
+  <h1>Farmer Homepage</h1>
+  <div id="homepage">
+    <div id="container">
+      <div id="createoption">
+        <h3>Add Ingredient</h3>
+
+        <form id="create" action="farmer/action/ingredient/create" method="post">
+          <div id="input1">
+            <div class="detail">
+              <p>ID:</p>
+              <input id="id" name="iid" type="text" required>
+            </div>
+            <div class="detail">
+              <p>Name:</p>
+              <input name="iname" type="text" required>
+            </div> 
+          </div>
+
+          <div id="input2">
+            <div class="detail">
+              <p>Type:</p>
+              <input name="itype" type="text">
+            </div>
+            <div class="detail">
+              <p>Issuer:</p>
+              <input id="issuer" name="iissuer" required value="Org1">
+            </div>  
+          </div>
+          <input type="submit" value="Add">
+        </form>
+      </div>
+    
+      <div id="queryoption">
+        <h3>Go to list of Ingredients page</h3>
+        <a id="show" href="farmer/action/ingredient/getAll">Show data</a>
+      </div>
+      
+      <div id="updateoption">
+        <h3>Update Ingredient</h3>
+        <form action="farmer/action/ingredient/update" method="post">
+          <div id="input3">
+            <div class="detail">
+              <p>ID:</p>
+              <input id="id" name="iid" type="text" required>
+            </div>
+            <div class="detail">
+              <p>New name:</p>
+              <input name="iname" type="text" required>
+            </div>
+            <div class="detail">
+              <p>New type:</p>
+              <input id="type" name="itype" type="text">
+            </div>
+          </div> 
+          <input type="submit" value="Update">
+        </form>
+      </div>
+    
+      <div id="deleteoption">
+        <h3>Delete Ingredient</h3>
+        <form action="farmer/action/ingredient/delete" method="post">
+          <div class="detail">
+            <p>ID of Ingredient want to Delete:</p>
+            <input name="iid" type="text" required>
+          </div>
+          <input type="submit" value="Delete">
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
