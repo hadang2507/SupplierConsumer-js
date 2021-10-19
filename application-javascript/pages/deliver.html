@@ -2,36 +2,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Supply Chain</title>
-</head>
-<body>
-  <h1>This is Deliver Homepage</h1>
-  <h3>Accept Shipping Request Order</h3>
-  <form action="shipper/action/order/acceptShipment" method="post">
-    ID:
-    <input name="id" type="text" required>
-    <input type="submit" value="Accept Order">
-  </form>
-  <h3>View Order in Request for Shipping</h3>
-  <a href="shipper/action/order/getRequested">View Data</a>
-  <h3>View Order in Shipping</h3>
-  <a href="shipper/action/order/getShipping">View Data</a>
-  <h3>View Order Succesfully</h3>
-  <a href="shipper/action/order/getShipped">View Data</a>
-  <h3>View All Order</h3>
-  <a href="shipper/action/order/getAll">View Data</a>
-  
-  <h3>Changing Status for Shipping Order</h3>
-  <form action="shipper/action/order/changeShipmentStatus" method="post">
-    ID:
-    <input name="id" type="text" required>
-    
-    Shipping status:
-    <input name="status" required value="Shipping" required>
-    <input type="submit" value="Update Status">
-  </form>
-  <br>
+  <link href='https://fonts.googleapis.com/css?family=Rosario' rel='stylesheet'>
 
-  <a href="/logout">Logout</a>
+  <title>Deliverer Homepage</title>
+
+  <style>
+    * { 
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .header {
+        height: 82px;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color:#F7FDE6;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    } 
+
+    #logout{
+      text-decoration: none;
+      background-color: #082D08;
+			height: 34px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 130px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			text-align: center;
+    }
+
+    body {
+			font-family: "Rosario";
+			margin-top: 89px;
+			text-align: center;
+			background-color: #efefef;
+      
+		}
+
+    h1 {
+        text-align: center;
+        margin-top: 153px;
+        margin-bottom: 88px;
+        font-weight: bolder;
+        font-size: 56px;
+        color: #082D08;
+    }
+
+    h3{
+      text-align: center;
+			font-weight: bolder;
+			font-size: 32px;
+			margin-bottom: 52px;
+			margin-top: 15px;
+			color: #082D08;
+    }
+
+    #homepage{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    #container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    #acceptorder{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 248px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    .queryorder{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 161px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #changestatus{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 248px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    .detail{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    p{
+      font-weight: bold;
+      color: #194819;
+    }
+
+    .show{
+      background-color: #082D08;
+      width: 130px;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 6px 40px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+    }
+
+    input[type=text], #status{
+			width: 250px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+		}
+
+    input[type=submit] {
+			background-color: #082D08;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 130px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+		}
+
+		#logout:hover, .show:hover, input[type=submit]:hover {
+			background-color: #66BA54;
+			border-color: #EBF6CC;
+		}
+
+    #input{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <img src="pantherlogo.png" alt="Panther logo" width="52px" style="margin: 0px 0px 0px 20px;">
+    <p> Supply Chain Project - Team Panther </p>
+    <a id="logout" href="/logout">Log out</a>
+  </div>
+
+  <h1>Deliverer Homepage</h1>
+  <div id="homepage">
+    <div id="container">
+      <div id="acceptorder">
+        <h3>Accept Shipping Request Order</h3>
+        <form action="shipper/action/order/acceptShipment" method="post">
+          <div class="detail">
+            <p>ID</p>
+            <input name="id" type="text" required>
+          </div>
+          <input type="submit" value="Accept Order">
+        </form>
+      </div>
+      
+      <div class="queryorder">
+        <h3>View Order in Request for Shipping</h3>
+        <a class="show" href="shipper/action/order/getRequested">View Data</a>
+      </div>
+      
+      <div class="queryorder">
+        <h3>View Order in Shipping</h3>
+        <a class="show" href="shipper/action/order/getShipping">View Data</a>
+      </div>
+      
+      <div class="queryorder">
+        <h3>View Order Succesfully</h3>
+        <a class="show" href="shipper/action/order/getShipped">View Data</a>
+      </div>
+
+      <div class="queryorder">
+        <h3>View All Order</h3>
+        <a class="show" href="shipper/action/order/getAll">View Data</a>
+      </div>
+      
+      <div id="changestatus">
+        <h3>Changing Status for Shipping Order</h3>
+        <form action="shipper/action/order/changeShipmentStatus" method="post">
+          <div id="input">
+            <div class="detail">
+              <p>ID:</p>
+              <input name="id" type="text" required>
+            </div>
+            <div class="detail">
+              <p>Shipping status:</p>
+              <input id="status" name="status" required value="Shipping" required>
+            </div>
+          </div>
+          <input type="submit" value="Update Status">
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

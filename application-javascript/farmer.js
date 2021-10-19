@@ -161,11 +161,12 @@ router.get("/ingredient/getAll", async function (req, res){
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);
 			let table_body = json2html.transform(resultStr, template_table_body);
+			
 			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title></head>'
-    	let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
-    	body = '<body>' + body + '</body>'
-    	let html = header + body + '</html>';
-			res.send(html);
+			let body = '<h1>Show Data</h1><br><table id="my_table" >\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+			body = '<body>' + body + '</body>'
+			let html = header + body + '</html>';
+				res.send(html);
 		} finally {
 			gateway.disconnect();
 		}
