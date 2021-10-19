@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var cookieParser = require('cookie-parser');
 const sessions = require('express-session');
+var path = require('path');
 
 // creating 24 hours from milliseconds
 const oneDay = 1000 * 60 * 60 * 24;
@@ -20,7 +21,8 @@ app.use(express.urlencoded({
   extended: true
 }));
 //use cookie
-app.use(cookieParser())
+app.use(cookieParser());
+//app.use(express.static(path.join(__dirname, 'pages'))); 
 
 //Routing
 const apiRoutes = require("./apiRoutes")
