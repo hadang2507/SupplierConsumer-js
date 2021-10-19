@@ -2,17 +2,97 @@
 <html>
   <head>
 	<title>Retailer Login Form</title>
+	
+	<style>
+		body {
+			font-family: "Rosario";
+			margin-top: 89px;
+			text-align: center;
+			background-color: #efefef;
+			display: flex;
+			justify-content: center;
+		}
+
+		h2{ 
+			text-align: center;
+			font-weight: bolder;
+			font-size: 32px;
+			margin-bottom: 52px;
+			margin-top: 12px;
+			color: #082D08;
+		}
+
+		#formcontainer {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			align-items: center;
+			background-color: #D8E9A8;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			border-radius: 35px;
+			width: 373px;
+			height: 424px;
+		}
+
+		input[type=submit] {
+			background-color: #082D08;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 130px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+		}
+
+		input[type=submit]:hover {
+			background-color: #66BA54;
+			border-color: #EBF6CC;
+		}
+
+		p {
+			margin-bottom: 8px;
+			margin-left: -200px;
+			font-weight: bold;
+			color: #194819;
+		}
+
+		input[type=text]{
+			width: 250px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+		}
+
+		input[type=password]{
+			width: 250px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+		}
+	</style>
   </head>
+
   <body>
-	<h2>Login as Retailer:</h2>
-	<form action="/login/retailer" method="post">
-  	<!-- user input-->
-  	Username:<br>
-  	<input type="text" name="rusername" placeholder="Username" required><br><br>
-  	Password:<br>
-  	<input type="password" name="rpassword" placeholder="Password" required><br><br>
-  	<!-- submit button -->
-  	<input type="submit" value="Login">
-	</form>
+	  <div id="formcontainer">
+		<h2>Sign in as Retailer</h2>
+		<form action="/login/retailer" method="post">
+		<p>Username</p>
+		<input type="text" name="rusername" placeholder="Username" required><br><br>
+		<p>Password</p>
+		<input type="password" name="rpassword" placeholder="Password" required><br><br>
+		<input type="submit" value="Log in">
+		</form>
+	  </div>
   </body>
 </html>
