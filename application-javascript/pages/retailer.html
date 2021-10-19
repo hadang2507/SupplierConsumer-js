@@ -2,36 +2,321 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Supply Chain</title>
+  <link href='https://fonts.googleapis.com/css?family=Rosario' rel='stylesheet'>
+
+  <title>Retailer Homepage</title>
+
+  <style>
+    * { 
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .header {
+        height: 82px;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color:#F7FDE6;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    } 
+
+    #logout{
+      text-decoration: none;
+      background-color: #082D08;
+			height: 34px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 130px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			text-align: center;
+    }
+
+    body {
+			font-family: "Rosario";
+			margin-top: 89px;
+			text-align: center;
+			background-color: #efefef;
+      
+		}
+
+    h1 {
+        text-align: center;
+        margin-top: 153px;
+        margin-bottom: 88px;
+        font-weight: bolder;
+        font-size: 56px;
+        color: #082D08;
+    }
+
+    h3{
+      text-align: center;
+			font-weight: bolder;
+			font-size: 32px;
+			margin-bottom: 52px;
+			margin-top: 15px;
+			color: #082D08;
+    }
+
+    #homepage{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    #container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    .queryorder, #viewproduct{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 161px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #createoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 372px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #listingredient{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 248px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #input1{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    #input2{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 30px;
+    }
+
+    #input3{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 50px;
+      margin-left: -23px;
+    }
+
+    .detail{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    input[type=text]{
+			width: 180px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+		}
+
+    #short{
+      width: 89px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+    }
+
+    #med{
+      width: 130px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+    }
+
+    .show{
+      background-color: #082D08;
+      width: 130px;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 6px 40px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+    }
+
+    input[type=submit] {
+			background-color: #082D08;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 130px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+		}
+
+    #retrieve{
+      background-color: #082D08;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 173px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+    }
+
+    #logout:hover, .show:hover, input[type=submit]:hover, #retrieve:hover{
+			background-color: #66BA54;
+			border-color: #EBF6CC;
+		}
+  </style>
 </head>
+
 <body>
-  <h1>This is Retailer Homepage</h1>
-  <h3>View all Order in Shipping</h3>
-  <a href="order/getShipping">View Data</a>
-  <h3>View all Successful Shipping Order</h3>
-  <a href="order/getShipped">View Data</a>
-  <h3>View All Products for Purchase</h3>
-  <a href="product/getAll">View Data</a>
-  <h3>Confirm Order Received</h3>
-  <form action="order/update" method="get">
-    ID:
-    <input name="id" type="text" required>
-    Name:
-    <input name="name" type="text" required>
-    Type:
-    <input name="type" type="text">
-    Products contained:
-    <input name="contain" type="text" required>
-    Issuer:
-    <input name="issuer" required value="Org2" required>
-    Owner:
-    <input name="powner" required value="Org4" required>
-    Shipping status:
-    <input name="status" required value="Shipped" required>
-    Transfer to:
-    <input name="transferto" required value="Retailer" required>
-    <input type="submit" value="Create Order">
-  </form>
-  
+  <div class="header">
+    <img src="pantherlogo.png" alt="Panther logo" width="52px" style="margin: 0px 0px 0px 20px;">
+    <p> Supply Chain Project - Team Panther </p>
+    <a id="logout" href="/logout">Log out</a>
+  </div>
+
+  <h1>Retailer Homepage</h1>
+
+  <div id="homepage">
+    <div id="container">
+      <div class="queryorder">
+        <h3>View Order in Request for Shipping</h3>
+        <a class="show" href="shipper/action/order/getRequested">View Data</a>
+      </div>
+      
+      <div class="queryorder">
+        <h3>View Order in Shipping</h3>
+        <a class="show" href="shipper/action/order/getShipping">View Data</a>
+      </div>
+      
+      <div class="queryorder">
+        <h3>View Order Succesfully</h3>
+        <a class="show" href="shipper/action/order/getShipped">View Data</a>
+      </div>
+      
+      <div id="viewproduct">
+        <h3>View All Products for Purchase</h3>
+        <a class="show" href="retailer/action/product/getAll">View Data</a>
+      </div>
+      
+      <div id="createoption">
+        <h3>Create new Order for Delivery Request</h3>
+
+        <form action="retailer/action/order/create" method="post">
+          <div id="input1">
+            <div class="detail">
+              <p>ID:</p>
+              <input id="short" name="id" type="text" required>
+            </div>
+            <div class="detail">
+              <p>Name:</p>
+              <input id="med" name="name" type="text" required>
+            </div> 
+            <div class="detail">
+              <p>Type:</p>
+              <input id="med" name="type" type="text">
+            </div> 
+          </div>
+
+          <div id="input2">
+            <div class="detail">
+              <p>Products contained:</p>
+              <input name="contain" type="text" required>
+            </div> 
+            <div class="detail">
+              <p>Issuer:</p>
+              <input id="short" name="issuer" required value="Retailer" required>
+            </div>
+            <div class="detail">
+              <p>Owner:</p>
+              <input id="short" name="owner" required value="Org2" required>
+            </div> 
+          </div>
+          
+          <div id="input3">
+            <div class="detail">
+              <p>Shipping status:</p>
+              <input id="med" name="status" required value="Requested" required>
+            </div>
+            <div class="detail">
+              <p>Transfer to:</p>
+              <input id="short" name="transferto" required value="Retailer" required>
+            </div>  
+          </div>
+          <input type="submit" value="Create Order">
+        </form>
+      </div>
+
+      <div id="listingredient">
+        <h3>Get List of Ingredient by Product ID</h3>
+        <form action="retailer/action/order/getIngredientinProduct" method="post">
+          <div class="detail">
+            <p>ID:</p>
+            <input name="id" type="text" required>
+          </div>
+          <input id="retrieve" type="submit" value="Retrieve Ingredient">
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

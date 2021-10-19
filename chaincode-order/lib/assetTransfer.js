@@ -19,7 +19,7 @@ class AssetTransfer extends Contract {
                 Contains:['P1','P2'],
                 Issuer: 'Org2',
                 Owner: 'Org2',
-                shippingStatus:'Delivering',
+                shippingStatus:'Shipping',
                 transferTo: ''
             },
             {
@@ -29,7 +29,7 @@ class AssetTransfer extends Contract {
                 Contains:['P3','P2'],
                 Issuer: 'Org2',
                 Owner: 'Org2',
-                shippingStatus:'',
+                shippingStatus:'Requested',
                 transferTo: ''
             },
             {
@@ -39,7 +39,27 @@ class AssetTransfer extends Contract {
                 Contains:['P1','P2','P3'],
                 Issuer: 'Org2',
                 Owner: 'Org2',
-                shippingStatus:'',
+                shippingStatus:'Shipped',
+                transferTo: ''
+            },
+            {
+                ID: 'O4',
+                Name: 'Order4',
+                Type: 'Order',
+                Contains:['P1','P2','P3'],
+                Issuer: 'Org2',
+                Owner: 'Org2',
+                shippingStatus:'Requested',
+                transferTo: ''
+            },
+            {
+                ID: 'O5',
+                Name: 'Order5',
+                Type: 'Order',
+                Contains:['P4','P2'],
+                Issuer: 'Org2',
+                Owner: 'Org2',
+                shippingStatus:'Shipping',
                 transferTo: ''
             },
         ];
@@ -122,6 +142,33 @@ class AssetTransfer extends Contract {
         return ctx.stub.putState(id, Buffer.from(JSON.stringify(Order)));
     }
 
+    // Get query result from query string
+    async GetQueryResultForQueryString(ctx, queryString) {
+		const allResults = [];
+        let resultsIterator = await ctx.stub.getQueryResult(queryString);
+		let result = await resultsIterator.next();
+        while (!result.done) {
+            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            allResults.push(record);
+            result = await resultsIterator.next();
+        }
+        return JSON.stringify(allResults);
+	}
+
+    async QueryOrdersByShippingStatus(ctx, shippingStatus) {
+		let queryString = {};
+		queryString.selector = {};
+		queryString.selector.shippingStatus = shippingStatus;
+		return await this.GetQueryResultForQueryString(ctx, JSON.stringify(queryString)); //shim.success(queryResults);
+    }
+
     // GetAllOrders returns all Orders found in the world state.
     async GetAllOrders(ctx) {
         const allResults = [];
@@ -137,7 +184,7 @@ class AssetTransfer extends Contract {
                 console.log(err);
                 record = strValue;
             }
-            allResults.push({ Key: result.value.key, Record: record });
+            allResults.push(record);
             result = await iterator.next();
         }
         return JSON.stringify(allResults);

@@ -128,12 +128,18 @@ class AssetTransfer extends Contract {
                 console.log(err);
                 record = strValue;
             }
-            allResults.push({ Key: result.value.key, Record: record });
+            allResults.push(record);
             result = await iterator.next();
         }
         return JSON.stringify(allResults);
     }
 
+    async QueryIngredientsByID(ctx, ID) {
+		let queryString = {};
+		queryString.selector = {};
+		queryString.selector.ID = ID;
+		return await this.GetQueryResultForQueryString(ctx, JSON.stringify(queryString)); //shim.success(queryResults);
+    }
 
 }
 

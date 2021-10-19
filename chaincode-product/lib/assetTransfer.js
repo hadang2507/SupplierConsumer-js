@@ -46,13 +46,13 @@ class AssetTransfer extends Contract {
     }
 
     // CreateProduct issues a new Product to the world state with given details.
-    async CreateProduct(ctx, id, Name, Type,madeOf,Issuer, Owner) {
+    async CreateProduct(ctx, id, Name, Type, madeOf, Issuer, Owner) {
         madeOf= madeOf.split(',');
         const Product = {
             ID: id,
             Name: Name,
             Type: Type,
-            madeOf:madeOf,
+            madeOf: madeOf,
             Issuer: Issuer,
             Owner: Owner
         };
@@ -70,7 +70,7 @@ class AssetTransfer extends Contract {
     }
 
     // UpdateProduct updates an existing Product in the world state with provided parameters.
-    async UpdateProduct(ctx, id, Name, Type, madeOf,Issuer, Owner) {
+    async UpdateProduct(ctx, id, Name, Type, madeOf, Issuer, Owner) {
         const exists = await this.ProductExists(ctx, id);
         if (!exists) {
             throw new Error(`The Product ${id} does not exist`);
@@ -127,11 +127,41 @@ class AssetTransfer extends Contract {
                 console.log(err);
                 record = strValue;
             }
-            allResults.push({ Key: result.value.key, Record: record });
+            allResults.push(record);
             result = await iterator.next();
         }
         return JSON.stringify(allResults);
     }
+
+    async GetQueryResultForQueryString(ctx, queryString) {
+        const allResults = [];
+        // Query all the result matching the "queryString" condition
+        let resultsIterator = await ctx.stub.getQueryResult(queryString);
+		let result = await resultsIterator.next();
+        while (!result.done) {
+            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            allResults.push(record);
+            result = await resultsIterator.next();
+        }
+        return JSON.stringify(allResults);
+    }
+
+    // Query the product by the gived product's ID
+    async QueryProductsByID(ctx, ID) {
+		let queryString = {};
+		queryString.selector = {};
+		queryString.selector.ID = ID;
+		return await this.GetQueryResultForQueryString(ctx, JSON.stringify(queryString)); //shim.success(queryResults);
+    }
+
 }
+
 
 module.exports = AssetTransfer;

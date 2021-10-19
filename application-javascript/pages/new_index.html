@@ -1,0 +1,145 @@
+<html lang="en"> 
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Rosario' rel='stylesheet'>
+
+    <title>Supply Chain Project</title>
+
+    <style>
+      body {
+        font-family: "Rosario";
+        margin-top: 20px;
+        text-align: center;
+        background-color: #efefef;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bolder;
+        font-size: 60px;
+        color: #082D08;
+      }
+      .title{ 
+        text-align: center;
+        margin-bottom: 65px;
+        font-size: 32px;
+        color: #194819;
+        font-weight: bold;
+      }
+
+      #subtitle{
+        text-align: center;
+        margin-bottom: 88px;
+        color: #66BA54;
+      }
+
+      #homecontain{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .homepage{
+        background-color: #D8E9A8;
+        width: 834px;
+        height: 200px;
+        box-shadow: 5px 5px 3px #bfbfbf; 
+        margin-bottom: 75px;
+        border-radius: 35px;
+      }
+
+      .container{
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        gap: 50px;
+      }
+
+      .options{
+        background-color: #082D08;
+        height: 29px;
+        border-radius: 15px;
+        border-color: #191A19;
+        width: 130px;
+        box-shadow: 5px 5px 3px #bfbfbf; 
+        padding: 5px;
+      }
+
+      .options:hover{
+        background-color: #66BA54;
+        border-color: #EBF6CC;
+      }
+
+      a{
+        color: #ffffff;
+        text-align: center;
+        padding-top: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Supply Chain Project</h1>
+    <h2 id="subtitle"> Team Panther</h2>
+    <!-- <form action="/farmer" method="post">
+      <input type="submit" name="farmer" value="Farmer">
+    </form>
+    <form action="/supplier">
+      <input type="submit" name="supplier" value="Supplier">
+    </form>
+    <form action="/deliver">
+      <input type="submit" name="deliver" value="Deliver">
+    </form>
+    <form action="/retailer">
+      <input type="submit" name="retailer" value="Retailer">
+    </form> -->
+    <div id="homecontain">
+      <div class="homepage">
+        <h2 class="title">Sign in</h2>
+
+        <div class="container">
+            <div class="options">
+              <a href="/login-farmer">Farmer</a>
+            </div>
+
+            <div class="options">
+              <a href="/login-supplier">Supplier</a>
+            </div>
+
+            <div class="options">
+              <a href="/login-deliver">Deliver</a>
+            </div>
+
+            <div class="options">
+              <a href="/login-retailer">Retailer</a>
+            </div>
+        </div>
+      </div>
+
+      <div class="homepage">
+        <h2 class="title">Sign up</h2>
+
+        <div class="container">
+          <div class="options">
+            <a href="/register-farmer">Farmer</a>
+          </div>
+
+          <div class="options">
+            <a href="/register-supplier">Supplier</a>
+          </div>
+
+          <div class="options">
+            <a href="/register-deliver">Deliver</a>
+          </div>
+
+          <div class="options">
+            <a href="/register-retailer">Retailer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

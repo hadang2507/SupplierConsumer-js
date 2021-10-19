@@ -14,7 +14,14 @@
         "cookie-parser": "^1.4.5",
         "ejs": "^3.1.6",
         "express": "^4.17.1",
-        "fabric-ca-client": "^2.2.4",
-        "fabric-network": "^2.2.4"
+        "express-session": "^1.17.2",
+        "fabric-ca-client": "^2.2.9",
+        "fabric-contract-api": "^2.2.2",
+        "fabric-network": "^2.2.9",
+        "fabric-shim": "^2.2.2",
+        "html-tablify": "^2.0.2",
+        "json-to-table": "^4.2.1",
+        "jsontableify": "^1.0.5",
+        "node-json2html": "^2.1.0"
     }
 }
