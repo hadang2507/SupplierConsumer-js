@@ -80,9 +80,9 @@ router.get("/product/getAll", async function (req, res){
 			let table_header = json2html.transform(resultStr[0], template_table_header);
 			let table_body = json2html.transform(resultStr, template_table_body);
 			
-			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #D8E9A8;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color: #368F23;color: white;} </style>'
+			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #905CD2; color: #FFEB35;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color:#FFECA7;color:#6C0DE5;font-weight:bolder;font-size:18px;} </style>'
 			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title>' + style + '</head>'
-    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#082D08;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#562FB9;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
     		body = '<body style = "margin-top: 58px;text-align: center;background-color: #efefef;">' + body + '</body>'
     		
     		let html = header + body + '</html>';
@@ -235,9 +235,10 @@ router.get("/order/getShipping", async function(req, res){
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);
 			let table_body = json2html.transform(resultStr, template_table_body);
-			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #D8E9A8;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color: #368F23;color: white;} </style>'
+			
+			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #905CD2; color: #FFEB35;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color:#FFECA7;color:#6C0DE5;font-weight:bolder;font-size:18px;} </style>'
 			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title>' + style + '</head>'
-    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#082D08;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#562FB9;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
     		body = '<body style = "margin-top: 58px;text-align: center;background-color: #efefef;">' + body + '</body>'
     		
     		let html = header + body + '</html>';
@@ -308,9 +309,10 @@ router.get("/order/getRequested", async function(req, res){
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);
 			let table_body = json2html.transform(resultStr, template_table_body);
-			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #D8E9A8;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color: #368F23;color: white;} </style>'
+			
+			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #905CD2; color: #FFEB35;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color:#FFECA7;color:#6C0DE5;font-weight:bolder;font-size:18px;} </style>'
 			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title>' + style + '</head>'
-    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#082D08;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#562FB9;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
     		body = '<body style = "margin-top: 58px;text-align: center;background-color: #efefef;">' + body + '</body>'
     		
     		let html = header + body + '</html>';
@@ -381,9 +383,10 @@ router.get("/order/getShipped", async function(req, res){
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);
 			let table_body = json2html.transform(resultStr, template_table_body);
-			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #D8E9A8;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color: #368F23;color: white;} </style>'
+			
+			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #905CD2; color: #FFEB35;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color:#FFECA7;color:#6C0DE5;font-weight:bolder;font-size:18px;} </style>'
 			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title>' + style + '</head>'
-    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#082D08;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#562FB9;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
     		body = '<body style = "margin-top: 58px;text-align: center;background-color: #efefef;">' + body + '</body>'
     		
     		let html = header + body + '</html>';
@@ -470,9 +473,10 @@ router.post("/order/getIngredientinProduct",async function(req, res){
 			}
 			let table_header = json2html.transform(str[0], template_table_header);
 			let table_body = json2html.transform(str, template_table_body);
-			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #D8E9A8;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color: #368F23;color: white;} </style>'
+			
+			let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #905CD2; color: #FFEB35;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color:#FFECA7;color:#6C0DE5;font-weight:bolder;font-size:18px;} </style>'
 			let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title>' + style + '</head>'
-    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#082D08;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+    		let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#562FB9;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
     		body = '<body style = "margin-top: 58px;text-align: center;background-color: #efefef;">' + body + '</body>'
     		
     		let html = header + body + '</html>';
