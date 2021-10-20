@@ -557,7 +557,7 @@ router.post("/order/getOrderHistory", async function(req, res){
     			let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#562FB9;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
     			body = '<body style = "margin-top: 58px;text-align: center;background-color: #efefef;">' + body + '</body>'
     			
-					let html = header + body + '</html>';
+				let html = header + body + '</html>';
 				res.send(html);
   
 		  } finally {
