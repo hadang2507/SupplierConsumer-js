@@ -189,6 +189,25 @@ class AssetTransfer extends Contract {
         }
         return JSON.stringify(allResults);
     }
+    // GetOrderHistory returns history of the Order.
+    async GetOrderHistory(ctx,id){
+        const allResults = [];
+        const iterator = await ctx.stub.getHistoryForKey(id);
+        let result = await iterator.next();
+        while (!result.done) {
+            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            allResults.push(record);
+            result = await iterator.next();
+        }
+        return JSON.stringify(allResults);
+    }
 }
 
 module.exports = AssetTransfer;
