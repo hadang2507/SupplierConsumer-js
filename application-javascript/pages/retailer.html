@@ -39,6 +39,7 @@
 			color: #ffff;
 			font-weight: bold;
 			text-align: center;
+      transition-duration: 0.3s;
     }
 
     body {
@@ -148,6 +149,11 @@
       gap: 10px;
     }
 
+    p{
+      font-weight: bold;
+      color: #194819;
+    }
+
     input[type=text]{
 			width: 180px;
 			height: 30px;
@@ -194,13 +200,15 @@
 
     input[type=submit] {
 			background-color: #082D08;
-			height: 29px;
+			height: 32px;
 			border-radius: 11px;
 			border-color: #191A19;
-			width: 130px;
+			width: 143px;
 			box-shadow: 5px 5px 3px #bfbfbf; 
-			padding: 5px;
+			padding-bottom: 2px;
 			color: #ffff;
+      font-family: "Rosario";
+      font-size: 16px;
 			font-weight: bold;
 			margin-top: 40px;
 			text-align: center;
@@ -208,13 +216,15 @@
 
     #retrieve{
       background-color: #082D08;
-			height: 29px;
+			height: 32px;
 			border-radius: 11px;
 			border-color: #191A19;
-			width: 173px;
+			width: 189px;
 			box-shadow: 5px 5px 3px #bfbfbf; 
-			padding: 5px;
+			padding-bottom: 2px;
 			color: #ffff;
+      font-family: "Rosario";
+      font-size: 16px;
 			font-weight: bold;
 			margin-top: 40px;
 			text-align: center;
@@ -240,17 +250,17 @@
     <div id="container">
       <div class="queryorder">
         <h3>View Order in Request for Shipping</h3>
-        <a class="show" href="shipper/action/order/getRequested">View Data</a>
+        <a class="show" href="retailer/action/order/getRequested">View Data</a>
       </div>
       
       <div class="queryorder">
         <h3>View Order in Shipping</h3>
-        <a class="show" href="shipper/action/order/getShipping">View Data</a>
+        <a class="show" href="retailer/action/order/getShipping">View Data</a>
       </div>
       
       <div class="queryorder">
         <h3>View Order Succesfully</h3>
-        <a class="show" href="shipper/action/order/getShipped">View Data</a>
+        <a class="show" href="retailer/action/order/getShipped">View Data</a>
       </div>
       
       <div id="viewproduct">
