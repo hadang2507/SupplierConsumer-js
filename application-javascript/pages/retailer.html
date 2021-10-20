@@ -104,7 +104,7 @@
       padding: 10px;
     }
 
-    #listingredient{
+    #listingredient, #showhistory{
       background-color: #FFF2C2;
       width: 834px;
       height: 248px;
@@ -113,7 +113,7 @@
       border-radius: 35px;
       padding: 10px;
     }
-
+  
     #input1{
       display: flex;
       align-items: center;
@@ -326,6 +326,18 @@
           <input id="retrieve" type="submit" value="Retrieve Ingredient">
         </form>
       </div>
+
+      <div id="showhistory">
+        <h3>Show Order History</h3>
+        <form action="supplier/action/order/getOrderHistory" method="post">
+          <div class="detail">
+            <p>ID of Order want to show history:</p>
+            <input name="id" type="text" required>
+          </div>
+          <input type="submit" value="Get Order History">
+        </form>
+      </div>
+
     </div>
   </div>
   <h3>Show Order History</h3>

@@ -89,7 +89,7 @@
       color: #6C0DE5;
     }
 
-    #acceptorder{
+    #acceptorder, #changestatus, #showhistory{
       background-color: #FFF2C2;
       width: 834px;
       height: 248px;
@@ -103,16 +103,6 @@
       background-color: #FFF2C2;
       width: 834px;
       height: 161px;
-      box-shadow: 5px 5px 3px #bfbfbf; 
-      margin-bottom: 75px;
-      border-radius: 35px;
-      padding: 10px;
-    }
-
-    #changestatus{
-      background-color: #FFF2C2;
-      width: 834px;
-      height: 248px;
       box-shadow: 5px 5px 3px #bfbfbf; 
       margin-bottom: 75px;
       border-radius: 35px;
@@ -240,6 +230,18 @@
           <input type="submit" value="Update Status">
         </form>
       </div>
+
+      <div id="showhistory">
+        <h3>Show Order History</h3>
+        <form action="supplier/action/order/getOrderHistory" method="post">
+          <div class="detail">
+            <p>ID of Order want to show history:</p>
+            <input name="id" type="text" required>
+          </div>
+          <input type="submit" value="Get Order History">
+        </form>
+      </div>
+
     </div>
   </div>
   <h3>Show Order History</h3>
