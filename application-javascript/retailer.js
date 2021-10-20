@@ -490,5 +490,79 @@ router.post("/order/getIngredientinProduct",async function(req, res){
 		console.error(`******** FAILED to run the application: ${error}`);
 	}	
 })
+router.post("/order/getOrderHistory", async function(req, res){
+	try {
 
+			let id = req.body.id;
+
+		  // const ccp = buildCCPOrg3();
+		  // const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org3.example.com');
+		  // const wallet = await buildWallet(Wallets, walletPath);
+		  // await enrollAdmin(caClient, wallet, mspOrg3);
+		  // await registerAndEnrollUser(caClient, wallet, mspOrg3, org3UserId, 'org3.department1');
+
+		  const ccp = buildCCPOrg3();
+			const wallet =  await Wallets.newFileSystemWallet( walletPath3);
+			const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
+			});
+  
+			  const network = await gateway.getNetwork(channelName);
+			  const contract = network.getContract('order');
+  
+			  //Function to get Orders in Shipping
+				//await contract.submitTransaction('CreateOrder', 'O7', 'Order7', 'Order', '[P1, P3, P5]', 'Retailer', 'Supplier', 'Shipping','Retailer');
+			  let result = await contract.evaluateTransaction('GetOrderHistory', id);
+			  let resultStr = result.toString();
+				console.log(JSON.parse(resultStr));
+				resultStr = JSON.parse(resultStr);
+				//FROM JSON TO HTML TABLE
+				let template_table_header = {
+					"<>": "tr", "html": [
+							{"<>": "th", "html": "ID"},
+							{"<>": "th", "html": "Name"},
+							{"<>": "th", "html": "Type"},
+							{"<>": "th", "html": "Contains"},
+							{"<>": "th", "html": "Issuer"},
+							{"<>": "th", "html": "Owner"},
+							{"<>": "th", "html": "shippingStatus"},
+							{"<>": "th", "html": "transferTo"},
+							//{"<>": "th", "html": "docType"},
+					]
+				}
+				let template_table_body = {
+					"<>": "tr", "html": [
+							{"<>": "td", "html": "${ID}"},
+							{"<>": "td", "html": "${Name}"},
+							{"<>": "td", "html": "${Type}"},
+							{"<>": "td", "html": "${Contains}"},
+							{"<>": "td", "html": "${Issuer}"},
+							{"<>": "td", "html": "${Owner}"},
+							{"<>": "td", "html": "${shippingStatus}"},
+							{"<>": "td", "html": "${transferTo}"},
+							//{"<>": "td", "html": "${docType}"},
+					]
+				}
+				let table_header = json2html.transform(resultStr[0], template_table_header);
+				let table_body = json2html.transform(resultStr, template_table_body);
+				let style = '<style> #my_table{border-collapse:collapse;width :100%;}' + '#my_table td, #my_table th{border:1px solid #ddd;padding:8px}' + '#my_table tr:hover {background-color: #D8E9A8;}' + '#my_table th{padding-top:12px;padding-bottom:12px;text-align:center;background-color: #368F23;color: white;} </style>'
+				let header = '<!DOCTYPE html>' + '<html lang="en">\n' + '<head><title>Data</title>' + style + '</head>'
+					let body = '<h1 style="text-align:center;margin-bottom:20px;font-weight:bolder;font-size:60px;color:#082D08;">Show Data</h1><br><table id="my_table">\n<thead>' + table_header + '\n</thead>\n<tbody>\n' + table_body + '\n</tbody>\n</table>'
+					body = '<body style = "margin-top: 58px;text-align: center;background-color: #efefef;">' + body + '</body>'
+					
+					let html = header + body + '</html>';
+				res.send(html);
+  
+		  } finally {
+			  gateway.disconnect();
+		  }
+	  } catch (error) {
+		  console.error(`******** FAILED to run the application: ${error}`);
+	  }
+})
 module.exports=router;
