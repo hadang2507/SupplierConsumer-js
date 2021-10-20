@@ -58,7 +58,7 @@ router.get("/order/getAll", async function (req, res){
 						{"<>": "th", "html": "Owner"},
 						{"<>": "th", "html": "shippingStatus"},
 						{"<>": "th", "html": "transferTo"},
-						{"<>": "th", "html": "docType"},
+						//{"<>": "th", "html": "docType"},
 				]
 			}
 			let template_table_body = {
@@ -71,7 +71,7 @@ router.get("/order/getAll", async function (req, res){
 						{"<>": "td", "html": "${Owner}"},
 						{"<>": "td", "html": "${shippingStatus}"},
 						{"<>": "td", "html": "${transferTo}"},
-						{"<>": "td", "html": "${docType}"},
+						//{"<>": "td", "html": "${docType}"},
 				]
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);
@@ -202,7 +202,7 @@ router.get("/order/getShipping", async function(req, res){
 						{"<>": "th", "html": "Owner"},
 						{"<>": "th", "html": "shippingStatus"},
 						{"<>": "th", "html": "transferTo"},
-						{"<>": "th", "html": "docType"},
+						//{"<>": "th", "html": "docType"},
 				]
 			}
 			let template_table_body = {
@@ -215,7 +215,7 @@ router.get("/order/getShipping", async function(req, res){
 						{"<>": "td", "html": "${Owner}"},
 						{"<>": "td", "html": "${shippingStatus}"},
 						{"<>": "td", "html": "${transferTo}"},
-						{"<>": "td", "html": "${docType}"},
+						//{"<>": "td", "html": "${docType}"},
 				]
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);
@@ -271,7 +271,7 @@ router.get("/order/getShipping", async function(req, res){
 						{"<>": "th", "html": "Owner"},
 						{"<>": "th", "html": "shippingStatus"},
 						{"<>": "th", "html": "transferTo"},
-						{"<>": "th", "html": "docType"},
+						//{"<>": "th", "html": "docType"},
 				]
 			}
 			let template_table_body = {
@@ -284,7 +284,7 @@ router.get("/order/getShipping", async function(req, res){
 						{"<>": "td", "html": "${Owner}"},
 						{"<>": "td", "html": "${shippingStatus}"},
 						{"<>": "td", "html": "${transferTo}"},
-						{"<>": "td", "html": "${docType}"},
+						//{"<>": "td", "html": "${docType}"},
 				]
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);
@@ -338,7 +338,7 @@ router.get("/order/getShipping", async function(req, res){
 						{"<>": "th", "html": "Owner"},
 						{"<>": "th", "html": "shippingStatus"},
 						{"<>": "th", "html": "transferTo"},
-						{"<>": "th", "html": "docType"},
+						//{"<>": "th", "html": "docType"},
 				]
 			}
 			let template_table_body = {
@@ -351,7 +351,7 @@ router.get("/order/getShipping", async function(req, res){
 						{"<>": "td", "html": "${Owner}"},
 						{"<>": "td", "html": "${shippingStatus}"},
 						{"<>": "td", "html": "${transferTo}"},
-						{"<>": "td", "html": "${docType}"},
+						//{"<>": "td", "html": "${docType}"},
 				]
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);

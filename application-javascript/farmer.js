@@ -147,7 +147,7 @@ router.get("/ingredient/getAll", async function (req, res){
 						{"<>": "th", "html": "Name"},
 						{"<>": "th", "html": "Type"},
 						{"<>": "th", "html": "Issuer"},
-						{"<>": "th", "html": "docType"},
+						//{"<>": "th", "html": "docType"},
 				]
 			}
 			let template_table_body = {
@@ -156,7 +156,7 @@ router.get("/ingredient/getAll", async function (req, res){
 						{"<>": "td", "html": "${Name}"},
 						{"<>": "td", "html": "${Type}"},
 						{"<>": "td", "html": "${Issuer}"},
-						{"<>": "td", "html": "${docType}"},
+						//{"<>": "td", "html": "${docType}"},
 				]
 			}
 			let table_header = json2html.transform(resultStr[0], template_table_header);
