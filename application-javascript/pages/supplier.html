@@ -4,61 +4,319 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href='https://fonts.googleapis.com/css?family=Rosario' rel='stylesheet'>
 
-  <title>Supply Chain</title>
+  <title>Supplier Homepage</title>
+
+  <style>
+    * { 
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .header {
+        height: 82px;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color:#F7FDE6;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    } 
+
+    #logout{
+      text-decoration: none;
+      background-color: #082D08;
+			height: 34px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 130px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 5px;
+			color: #ffff;
+			font-weight: bold;
+			text-align: center;
+      transition-duration: 0.3s;
+    }
+
+    body {
+			font-family: "Rosario";
+			margin-top: 89px;
+			text-align: center;
+			background-color: #efefef;
+      
+		}
+
+    h1 {
+        text-align: center;
+        margin-top: 153px;
+        margin-bottom: 88px;
+        font-weight: bolder;
+        font-size: 56px;
+        color: #082D08;
+    }
+
+    h3{
+      text-align: center;
+			font-weight: bolder;
+			font-size: 32px;
+			margin-bottom: 52px;
+			margin-top: 15px;
+			color: #082D08;
+    }
+
+    #homepage{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    #container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    p{
+      font-weight: bold;
+      color: #194819;
+    }
+
+    #createoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 316px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #queryoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 161px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #updateoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 248px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #deleteoption{
+      background-color: #D8E9A8;
+      width: 834px;
+      height: 248px;
+      box-shadow: 5px 5px 3px #bfbfbf; 
+      margin-bottom: 75px;
+      border-radius: 35px;
+      padding: 10px;
+    }
+
+    #input1{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    #input2{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 30px;
+      margin-left: -23px;
+    }
+
+    .detail{
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    input[type=text]{
+			width: 180px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+		}
+    
+    #short{
+      width: 89px;
+			height: 30px;
+			padding-left: 19px;
+			border-radius: 10px;
+			background-color: #efefef;
+			border: none;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+    }
+
+    .show{
+      background-color: #082D08;
+      width: 130px;
+			height: 29px;
+			border-radius: 11px;
+			border-color: #191A19;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding: 6px 40px;
+			color: #ffff;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+    }
+
+    input[type=submit] {
+			background-color: #082D08;
+			height: 32px;
+			border-radius: 11px;
+			border-color: #191A19;
+			width: 143px;
+			box-shadow: 5px 5px 3px #bfbfbf; 
+			padding-bottom: 2px;
+			color: #ffff;
+      font-family: "Rosario";
+      font-size: 16px;
+			font-weight: bold;
+			margin-top: 40px;
+			text-align: center;
+		}
+
+    #logout:hover, .show:hover, input[type=submit]:hover, #retrieve:hover{
+			background-color: #66BA54;
+			border-color: #EBF6CC;
+		}
+  </style>
 </head>
+
 <body>
-  <h1>This is Supplier Homepage</h1>
-  <h3>Add Products</h3>
-  <form action="supplier/action/product/create" method="post">
-    ID:
-    <input name="pid" type="text" required>
-    Name:
-    <input name="pname" type="text" required>
-    Type:
-    <input name="ptype" type="text">
-    Made of:
-    <input name="pmadeof" type="text" required>
-    Issuer:
-    <input name="pissuer" required value="Org2" required>
-    Owner:
-    <input name="powner" required value="Org2" required>
-    <input type="submit" value="Add">
-  </form>
+  <div class="header">
+    <img src="pantherlogo.png" alt="Panther logo" width="52px" style="margin: 0px 0px 0px 20px;">
+    <p> Supply Chain Project - Team Panther </p>
+    <a id="logout" href="/logout">Log out</a>
+  </div>
 
-  <h3>Go to list of Products page</h3>
-  <a href="supplier/action/product/getAll">Show data</a>
+  <h1>Supplier Homepage</h1>
 
-  <h3>Update Product</h3>
-  <form action="supplier/action/product/update" method="post">
-    ID:
-    <input name="pid" type="text" required>
-    New Name:
-    <input name="pname" type="text" required>
-    Made of:
-    <input name="pmadeof" type="text" required>
-    <input type="submit" value="Modify">
-  </form>
+  <div id="homepage">
+    <div id="container">
+      <div id="createoption">
+        <h3>Add Products</h3>
+        <form action="supplier/action/product/create" method="post">
+          <div id="input1">
+            <div class="detail">
+              <p>ID:</p>
+              <input id="short" name="pid" type="text" required>
+            </div>
+            <div class="detail">
+              <p>Name:</p>
+              <input name="pname" type="text" required>
+            </div> 
+            <div class="detail">
+              <p>Type:</p>
+              <input name="ptype" type="text">
+            </div>
+          </div>
 
-  <h3>Delete Product</h3>
-  <form action="supplier/action/product/delete" method="post">
-    ID of Product want to Delete:
-    <input name="iid" type="text" required>
-    <input type="submit" value="Delete">
-  </form>
+          <div id="input2">
+            <div class="detail">
+              <p>Made of:</p>
+              <input name="pmadeof" type="text" required>
+            </div>
+            <div class="detail">
+              <p>Issuer:</p>
+              <input id="short" name="pissuer" required value="Org2" required>
+            </div>  
+            <div class="detail">
+              <p>Owner:</p>
+              <input id="short" name="powner" required value="Org2" required>
+            </div>  
+          </div>
+          <input type="submit" value="Add">
+        </form>
+      </div>
+      
+      <div id="queryoption">
+        <h3>Go to list of Products page</h3>
+        <a class="show" href="supplier/action/product/getAll">Show data</a>
+      </div>
 
-  <h3>View all Order in Request for Shipping</h3>
-  <a href="supplier/action/order/getRequested">View Data</a>
+      <div id="updateoption">
+        <h3>Update Product</h3>
+        <form action="supplier/action/product/update" method="post">
+          <div id="input1">
+            <div class="detail">
+              <p>ID:</p>
+              <input id="short" name="pid" type="text" required>
+            </div>
+            <div class="detail">
+              <p>New name:</p>
+              <input name="pname" type="text" required>
+            </div>
+            <div class="detail">
+              <p>Made of:</p>
+              <input name="pmadeof" type="text" required>
+            </div>
+          </div> 
+          <input type="submit" value="Modify">
+        </form>
+      </div>
 
-  <h3>View all Order in Shipping</h3>
-  <a href="supplier/action/order/getShipping">View Data</a>
+      <div id="deleteoption">
+        <h3>Delete Product</h3>
+        <form action="supplier/action/product/delete" method="post">
+          <div class="detail">
+            <p>ID of Product want to Delete:</p>
+            <input name="iid" type="text" required>
+          </div>
+          <input type="submit" value="Delete">
+        </form>
+      </div>
 
-  <h3>View all Successful Shipping Order</h3>
-  <a href="supplier/action/order/getShipped">View Data</a>
+      <div id="queryoption">
+        <h3>View Order in Request for Shipping</h3>
+        <a class="show" href="supplier/action/order/getRequested">View Data</a>
+      </div>
+      
+      <div id="queryoption">
+        <h3>View Order in Shipping</h3>
+        <a class="show" href="supplier/action/order/getShipping">View Data</a>
+      </div>
+      
+      <div id="queryoption">
+        <h3>View Order Succesfully</h3>
+        <a class="show" href="supplier/action/order/getShipped">View Data</a>
+      </div>
+    
+      <div id="queryoption">
+        <h3>View Ingredient List</h3>
+        <a class="show" href="supplier/action/ingredient/getAll">View Data</a> 
+      </div>
 
-  <h3>View Ingredient List</h3>
-  <a href="supplier/action/ingredient/getAll">View Data</a>
-<br>
-  <a href="/logout">Logout</a>
-<br>
+    </div>
+  </div>
 </body>
 </html>
