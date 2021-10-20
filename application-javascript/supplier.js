@@ -615,7 +615,7 @@ router.post("/order/getOrderHistory", async function(req, res){
 				body = '<body style = "margin-top: 58px;text-align: center;background-color: #efefef;">' + body + '</body>'
 
 					
-					let html = header + body + '</html>';
+				let html = header + body + '</html>';
 				res.send(html);
 	
 			} finally {
