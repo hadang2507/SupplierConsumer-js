@@ -162,7 +162,6 @@ router.post("/product/update", async function (req, res){
 	} catch (error) {
 		console.error(`******** FAILED to run the application: ${error}`);
 	}
-
 	try {
 		const id = req.body.pid;
 		const name = req.body.pname;
