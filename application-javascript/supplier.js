@@ -117,6 +117,52 @@ router.post("/product/create", async function (req, res){
 
 router.post("/product/update", async function (req, res){
 	try {
+		const id = req.body.pid
+    const madeOf = req.body.pmadeof;
+		const str = madeOf.toString();
+		const madeOfStr = str.split(",");		
+
+		// const ccp = buildCCPOrg2();
+		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
+		// const wallet = await buildWallet(Wallets, walletPath);
+		// await enrollAdmin(caClient, wallet, mspOrg2);
+		// await registerAndEnrollUser(caClient, wallet, mspOrg2, org2UserId, 'org2.department1');
+
+		const ccp = buildCCPOrg2();
+		const wallet =  await Wallets.newFileSystemWallet( walletPath2)
+		const gateway = new Gateway();
+
+		try {
+			await gateway.connect(ccp, {
+				wallet,
+				identity: 'admin',
+				discovery: { enabled: true, asLocalhost: true }
+			});
+
+			const network = await gateway.getNetwork('mychannel1');
+			const contract = network.getContract('ingredient');
+
+			// CREATE PRODUCT
+			try {
+				for(const value of madeOfStr){
+					let result = await contract.evaluateTransaction('IngredientExists', value);
+					if(result == 'false'){
+						// console.log(result);
+						// console.log(value)
+						res.send('Ingredient to make Product ' + id + ' does not exist');
+						return;
+					}
+				}
+			} catch (createError) {
+				res.send("Caught the error" + createError);
+			}
+		} finally {
+			gateway.disconnect();
+		}
+	} catch (error) {
+		console.error(`******** FAILED to run the application: ${error}`);
+	}
+	try {
 		const id = req.body.pid;
 		const name = req.body.pname;
 		const madeof = req.body.pmadeof;
