@@ -72,12 +72,12 @@ router.post("/product/create", async function (req, res){
 
 	//CREATE PRODUCT AFTER CHECKING INGREDIENT
 	try {
-		const id = req.query.pid;
-		const name = req.query.pname;
-		const type = req.query.ptype;
-    const madeOf = req.query.pmadeof;
-		const issuer = req.query.pissuer;
-    const owner = req.query.powner;
+		const id = req.body.pid;
+		const name = req.body.pname;
+		const type = req.body.ptype;
+    const madeOf = req.body.pmadeof;
+		const issuer = req.body.pissuer;
+    const owner = req.body.powner;
 
 		// const ccp = buildCCPOrg2();
 		// const caClient = buildCAClient(FabricCAServices, ccp, 'ca.org2.example.com');
@@ -363,7 +363,7 @@ router.post("/product/delete", async function(req, res){
 			const contract = network.getContract(chaincodeName);
 		
 			// DELETE INGREDIENT
-			await contract.evaluateTransaction('DeleteProduct', id);
+			await contract.submitTransaction('DeleteProduct', id);
 			res.send("Delete Successfully");
 
 		} finally {

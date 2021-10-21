@@ -17,50 +17,50 @@ class AssetTransfer extends Contract {
                 Name: 'Order1',
                 Type: 'Order',
                 Contains:['P1','P2'],
-                Issuer: 'Org2',
-                Owner: 'Org2',
+                Issuer: 'Retailer',
+                Owner: 'Retailer',
                 shippingStatus:'Shipping',
-                transferTo: ''
+                transferTo: 'Retailer'
             },
             {
                 ID: 'O2',
                 Name: 'Order2',
                 Type: 'Order',
                 Contains:['P3','P2'],
-                Issuer: 'Org2',
-                Owner: 'Org2',
+                Issuer: 'Retailer',
+                Owner: 'Retailer',
                 shippingStatus:'Requested',
-                transferTo: ''
+                transferTo: 'Retailer'
             },
             {
                 ID: 'O3',
                 Name: 'Order3',
                 Type: 'Order',
                 Contains:['P1','P2','P3'],
-                Issuer: 'Org2',
-                Owner: 'Org2',
+                Issuer: 'Retailer',
+                Owner: 'Retailer',
                 shippingStatus:'Shipped',
-                transferTo: ''
+                transferTo: 'Retailer'
             },
             {
                 ID: 'O4',
                 Name: 'Order4',
                 Type: 'Order',
                 Contains:['P1','P2','P3'],
-                Issuer: 'Org2',
-                Owner: 'Org2',
+                Issuer: 'Retailer',
+                Owner: 'Retailer',
                 shippingStatus:'Requested',
-                transferTo: ''
+                transferTo: 'Retailer'
             },
             {
                 ID: 'O5',
                 Name: 'Order5',
                 Type: 'Order',
                 Contains:['P4','P2'],
-                Issuer: 'Org2',
-                Owner: 'Org2',
+                Issuer: 'Retailer',
+                Owner: 'Retailer',
                 shippingStatus:'Shipping',
-                transferTo: ''
+                transferTo: 'Retailer'
             },
         ];
 
