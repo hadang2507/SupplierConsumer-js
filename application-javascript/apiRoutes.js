@@ -12,7 +12,7 @@ const login = require("./login.js")
 router.use('/farmer/action', farmer)
 router.use('/supplier/action', supplier)
 router.use('/retailer/action', retailer)
-router.use('/shipper/action', deliver)
+router.use('/deliver/action', deliver)
 router.use('/registration', registration)
 router.use('/login', login)
 
